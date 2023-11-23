@@ -1,5 +1,5 @@
 <table align="center"><tr><td align="center" width="9999"><br>
-<img src="images/logoifsc.png" align="center" width="150" alt="Logo IFSC">
+<img src="logoifsc.png" align="center" width="150" alt="Logo IFSC">
 
 # Repositório
 
