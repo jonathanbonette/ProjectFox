@@ -1,0 +1,39 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>assets/backgrounds/1.png</file>
+        <file>assets/backgrounds/1-night.png</file>
+        <file>assets/backgrounds/2.png</file>
+        <file>assets/backgrounds/2-night.png</file>
+        <file>assets/backgrounds/3.png</file>
+        <file>assets/backgrounds/3-night.png</file>
+        <file>assets/backgrounds/4.png</file>
+        <file>assets/backgrounds/5.png</file>
+        <file>assets/backgrounds/5-night.png</file>
+        <file>assets/backgrounds/6.png</file>
+        <file>assets/backgrounds/6-night.png</file>
+        <file>assets/backgrounds/7.png</file>
+        <file>assets/backgrounds/7-night.png</file>
+        <file>assets/backgrounds/8.png</file>
+        <file>assets/backgrounds/9.png</file>
+        <file>assets/backgrounds/10.png</file>
+        <file>assets/backgrounds/11.png</file>
+        <file>assets/backgrounds/12.png</file>
+        <file>assets/backgrounds/13.png</file>
+        <file>assets/backgrounds/14.png</file>
+        <file>assets/backgrounds/15.png</file>
+        <file>assets/backgrounds/16.png</file>
+        <file>assets/backgrounds/17.png</file>
+        <file>assets/backgrounds/18.png</file>
+        <file>assets/backgrounds/19.png</file>
+        <file>assets/backgrounds/20.png</file>
+        <file>assets/backgrounds/21.png</file>
+        <file>assets/backgrounds/22.png</file>
+        <file>assets/backgrounds/23.png</file>
+        <file>assets/backgrounds/24.png</file>
+        <file>assets/logo.png</file>
+        <file>assets/char/g_archer.png</file>
+        <file>assets/char/g_mage.png</file>
+        <file>assets/char/g_paladin.png</file>
+        <file>assets/char/g_warrior.png</file>
+    </qresource>
+</RCC>
