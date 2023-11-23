@@ -1,37 +1,30 @@
+// Test ***
+// gamedata.h
+
 #ifndef GAMEDATA_H
 #define GAMEDATA_H
 
-#include "character.h"
 #include "dialogtree.h"
+#include "character.h"
 
-class GameData {
-
-private:
-    GameData() {}
-
+class GameData
+{
 public:
-    void setPlayer(Character* p){
-        player = p;
-    }
-    Character* getPlayer(){
-        return player;
-    }
+    static GameData* getInstance();
 
-    void setEnemy(Character* e) {
-        enemy = e;
-    }
+    Character* getPlayer() const;
+    Character* getEnemy() const;
 
-    Character* getEnemy() {
-        return enemy;
-    }
+    AttackResult getPlayerAttackResult() const;
+    AttackResult getEnemyAttackResult() const;
 
-    static GameData* getInstance() {
-        if(_instance == 0){
-            _instance = new GameData();
-        }
-        return _instance;
-    }
+    void setPlayer(Character* player);
+    void setEnemy(Character* enemy);
 
+    void setPlayerAttackResult(const AttackResult& result);
+    void setEnemyAttackResult(const AttackResult& result);
+
+    // Test ***
     void setDialogWindow(DialogWindow* dialogWindow) {
         this->dialogWindow = dialogWindow;
     }
@@ -41,12 +34,72 @@ public:
     }
 
 private:
-    Character * player;
-    Character * enemy;
+    GameData();
 
-    static GameData* _instance;
+    Character* player;
+    Character* enemy;
 
+    AttackResult playerAttackResult;
+    AttackResult enemyAttackResult;
+
+    // Test ***
     DialogWindow* dialogWindow;
 };
 
 #endif // GAMEDATA_H
+
+
+// ##########################
+
+//#ifndef GAMEDATA_H
+//#define GAMEDATA_H
+
+//#include "character.h"
+//#include "dialogtree.h"
+
+//class GameData {
+
+//private:
+//    GameData() {}
+
+//public:
+//    void setPlayer(Character* p){
+//        player = p;
+//    }
+//    Character* getPlayer(){
+//        return player;
+//    }
+
+//    void setEnemy(Character* e) {
+//        enemy = e;
+//    }
+
+//    Character* getEnemy() {
+//        return enemy;
+//    }
+
+//    static GameData* getInstance() {
+//        if(_instance == 0){
+//            _instance = new GameData();
+//        }
+//        return _instance;
+//    }
+
+//    void setDialogWindow(DialogWindow* dialogWindow) {
+//        this->dialogWindow = dialogWindow;
+//    }
+
+//    DialogWindow* getDialogWindow() const {
+//        return dialogWindow;
+//    }
+
+//private:
+//    Character * player;
+//    Character * enemy;
+
+//    static GameData* _instance;
+
+//    DialogWindow* dialogWindow;
+//};
+
+//#endif // GAMEDATA_H

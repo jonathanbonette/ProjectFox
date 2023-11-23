@@ -20,6 +20,10 @@ private slots:
     void usePotion();
     void initStep();
 
+    // Test ***
+    void updateHealthLabels();
+    void checkBattleResult();
+
 signals:
     void battleStarted(Character *player, Character *enemy);
 
@@ -30,6 +34,11 @@ private:
     QLabel *infoLabel;
     QPushButton *attackButton;
     QPushButton *potionButton;
+
+    // Test ***
+    int playerPotions;  // Número inicial de poções do jogador
+    QLabel *playerHealthLabel;
+    QLabel *enemyHealthLabel;
 };
 
 #endif // BATTLEWINDOW_H

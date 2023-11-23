@@ -1,5 +1,9 @@
 #include <QApplication>
 #include "dialogtree.h"
+
+// Test ***
+//#include "gamedata.h"
+
 #include "startwindow.h"
 #include "characterselectionwindow.h"
 
@@ -27,14 +31,6 @@ int main(int argc, char *argv[])
 
     QObject::connect(&startWindow, &StartWindow::battleButtonClicked, [&]() {
         startWindow.hide();  // Esconde a tela inicial
-
-        // Test ***
-        // Cria instâncias dos personagens (exemplo: Guerreiro e Inimigo Peludo)
-        Character *player = new Character("Asgorn", 100, 20, 10);
-        Character *enemy = new Character("Inimigo Peludo", 80, 15, 8);
-
-        // Configura os personagens na janela de batalha
-        startWindow.battleWindow.setCharacters(player, enemy);
 
         // Exibe a janela de batalha
         startWindow.battleWindow.show();

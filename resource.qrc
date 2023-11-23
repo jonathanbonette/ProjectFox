@@ -35,5 +35,6 @@
         <file>assets/char/g_mage.png</file>
         <file>assets/char/g_paladin.png</file>
         <file>assets/char/g_warrior.png</file>
+        <file>assets/monster/reptile/idle.gif</file>
     </qresource>
 </RCC>

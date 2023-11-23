@@ -1,4 +1,5 @@
 #include "character.h"
+#include "gamedata.h"
 
 Character::Character(const QString &name, int health, int attack, int defense)
     : name(name), health(health), attack(attack), defense(defense) {}
@@ -19,7 +20,8 @@ int Character::getDefense() const {
     return defense;
 }
 
-AttackResult Character::attackEnemy(Character &enemy) {
+AttackResult Character::attackEnemy(Character& enemy)
+{
     AttackResult result;
 
     int diceRoll = rollD20();
@@ -28,23 +30,23 @@ AttackResult Character::attackEnemy(Character &enemy) {
     int damage = std::max(1, static_cast<int>(baseDamage * reductionFactor));
     int hitError = calculateChanceOfError();
 
-    if (diceRoll == 1 || hitError <= diceRoll) {
-        result.message = QString("%1 tentou atacar %2, mas errou o alvo.")
-                             .arg(name)
-                             .arg(enemy.getName());
-        result.damage = 0;
+    if (diceRoll == 1 || hitError <= diceRoll)
+    {
+        result.message = "Você tentou atacar, mas errou o alvo.";
+                         result.damage = 0;
         result.hit = false;
-        return result;
+    }
+    else
+    {
+        enemy.takeDamage(damage);
+        result.message = QString("Você atacou, causando %1 de dano.").arg(damage);
+                         result.damage = damage;
+        result.hit = true;
     }
 
-    enemy.takeDamage(damage);
-
-    result.message = QString("%1 atacou %2 causando %3 de dano.")
-                         .arg(name)
-                         .arg(enemy.getName())
-                         .arg(damage);
-    result.damage = damage;
-    result.hit = true;
+    // Armazena o resultado no GameData
+    GameData* gameData = GameData::getInstance();
+    gameData->setPlayerAttackResult(result);
 
     return result;
 }

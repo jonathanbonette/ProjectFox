@@ -12,6 +12,8 @@ struct AttackResult {
 };
 
 class Character {
+
+
 public:
     Character(const QString &name, int health, int attack, int defense);
 
@@ -21,6 +23,7 @@ public:
     int getDefense() const;
 
     AttackResult attackEnemy(Character &enemy);
+
     void takeDamage(int damage);
 
 private:
