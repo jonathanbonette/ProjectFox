@@ -1,5 +1,4 @@
 #include <QApplication>
-#include "dialogtree.h"
 #include "startwindow.h"
 #include "characterselectionwindow.h"
 

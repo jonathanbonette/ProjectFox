@@ -5,7 +5,7 @@
 #include <QPushButton>
 #include "battlewindow.h"
 #include "characterselectionwindow.h"
-#include "dialogtree.h"
+#include "dialogwindow.h"
 
 class StartWindow : public QWidget
 {

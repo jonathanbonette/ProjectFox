@@ -1,7 +1,7 @@
 #ifndef GAMEDATA_H
 #define GAMEDATA_H
 
-#include "dialogtree.h"
+#include "dialogwindow.h"
 #include "character.h"
 
 class GameData

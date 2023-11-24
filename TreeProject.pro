@@ -12,6 +12,7 @@ SOURCES += \
     battlewindow.cpp \
     character.cpp \
     characterselectionwindow.cpp \
+    dialogwindow.cpp \
     gamedata.cpp \
     main.cpp \
     dialogtree.cpp \
@@ -22,6 +23,7 @@ HEADERS += \
     character.h \
     characterselectionwindow.h \
     dialogtree.h \
+    dialogwindow.h \
     gamedata.h \
     startwindow.h
 
