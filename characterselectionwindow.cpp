@@ -7,6 +7,7 @@
 CharacterSelectionWindow::CharacterSelectionWindow(QWidget *parent)
     : QWidget(parent)
 {
+    // Inicializa a criação dos widgets da tela de seleção de personagens
     createWidgets();
 }
 
@@ -23,37 +24,31 @@ void CharacterSelectionWindow::createWidgets()
     // Configuração do tamanho da tela
     setFixedSize(640, 480);
 
-    // Adiciona a imagem do arqueiro
+    // Criação dos labels para as imagens dos personagens
     QLabel *archerImg = new QLabel;
-    QPixmap img1(":/images/assets/char/g_archer.png");
-    archerImg->setPixmap(img1);
-    archerImg->setAlignment(Qt::AlignCenter);
-
-    // Adiciona a imagem do mago
     QLabel *mageImg = new QLabel;
-    QPixmap img2(":/images/assets/char/g_mage.png");
-    mageImg->setPixmap(img2);
-    mageImg->setAlignment(Qt::AlignCenter);
-
-    // Adiciona a imagem do guerreiro
     QLabel *warriorImg = new QLabel;
-    QPixmap img3(":/images/assets/char/g_warrior.png");
-    warriorImg->setPixmap(img3);  // Ajuste conforme necessário
-    warriorImg->setAlignment(Qt::AlignCenter);
-
-    // Adiciona a imagem do paladino
     QLabel *paladinImg = new QLabel;
-    QPixmap img4(":/images/assets/char/g_paladin.png");
-    paladinImg->setPixmap(img4);  // Ajuste conforme necessário
+
+    // Configuração das imagens para os labels dos personagens
+    archerImg->setPixmap(QPixmap(":/images/assets/char/g_archer.png"));
+    mageImg->setPixmap(QPixmap(":/images/assets/char/g_mage.png"));
+    warriorImg->setPixmap(QPixmap(":/images/assets/char/g_warrior.png"));
+    paladinImg->setPixmap(QPixmap(":/images/assets/char/g_paladin.png"));
+
+    // Ajuste de alinhamento dos labels
+    archerImg->setAlignment(Qt::AlignCenter);
+    mageImg->setAlignment(Qt::AlignCenter);
+    warriorImg->setAlignment(Qt::AlignCenter);
     paladinImg->setAlignment(Qt::AlignCenter);
 
-    // Cria os botões dos personagens
+    // Criação dos botões para seleção dos personagens
     QPushButton *archerButton = new QPushButton("Arqueiro", this);
     QPushButton *wizardButton = new QPushButton("Mago", this);
     QPushButton *warriorButton = new QPushButton("Guerreiro", this);
     QPushButton *paladinButton = new QPushButton("Paladino", this);
 
-    // Conectar os botões aos slots correspondentes
+    // Conexão dos botões aos slots correspondentes
     connect(archerButton, &QPushButton::clicked, this, [=]() { characterSelected(new Archer()); });
     connect(wizardButton, &QPushButton::clicked, this, [=]() { characterSelected(new Mage()); });
     connect(warriorButton, &QPushButton::clicked, this, [=]() { characterSelected(new Warrior()); });
@@ -76,6 +71,7 @@ void CharacterSelectionWindow::createWidgets()
     // Cria um layout horizontal para os botões
     QHBoxLayout *buttonLayout = new QHBoxLayout;
 
+    // Adiciona os botões de seleção ao layout dos botões
     buttonLayout->addWidget(archerButton);
     buttonLayout->addWidget(wizardButton);
     buttonLayout->addWidget(warriorButton);
@@ -84,6 +80,7 @@ void CharacterSelectionWindow::createWidgets()
     // Adiciona o layout horizontal de botões ao layout principal
     mainLayout->addLayout(buttonLayout);
 
+    // Configura o layout principal para a tela de seleção de personagens
     setLayout(mainLayout);
 }
 
@@ -97,7 +94,6 @@ void CharacterSelectionWindow::characterSelected(Character *character)
     DialogWindow* dialogWindow = new DialogWindow;
     gameData->setDialogWindow(dialogWindow);
 
-    // DEBUG
     // Exibir informações sobre o personagem selecionado
     QMessageBox::information(this, "Personagem Selecionado", QString(
                                                                  "Você selecionou o personagem: %1 \nVida: %2 \nAtaque: %3 \nDefesa: %4")
@@ -109,6 +105,6 @@ void CharacterSelectionWindow::characterSelected(Character *character)
 
     // Mostrar o DialogWindow
     dialogWindow->show();
-    this->close();  // Fechar a janela de seleção de personagem
+    this->close();          // Fecha a janela de seleção de personagem
 
 }

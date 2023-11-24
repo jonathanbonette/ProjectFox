@@ -13,9 +13,12 @@ class BattleWindow : public QWidget
 
 public:
     BattleWindow(QWidget *parent = nullptr);
+
+    // Define os personagens que participarão da batalha
     void setCharacters(Character *player, Character *enemy);
 
 private slots:
+    // Slots para lidar com eventos de batalha
     void startBattle();
     void attack();
     void usePotion();
@@ -24,22 +27,32 @@ private slots:
     void checkBattleResult();
 
 signals:
+    // Sinal emitido quando a batalha é iniciada com os personagens definidos
     void battleStarted(Character *player, Character *enemy);
 
 private:
+    // Personagens envolvidos na batalha
     Character *player;
     Character *enemy;
-    QPushButton *startButton;
+
+    // Rótulos para exibir informações durante a batalha
     QLabel *infoLabel;
-    QPushButton *attackButton;
-    QPushButton *potionButton;
     QLabel *playerHealthLabel;
     QLabel *enemyHealthLabel;
     QLabel *enemyImgLabel;
-    QVBoxLayout *actionButtonLayout;
-    int playerPotions;
     QLabel *hpMessage;
+    QLabel *resultAttackLabel;
 
+    // Botões para ações durante a batalha
+    QPushButton *startButton;
+    QPushButton *attackButton;
+    QPushButton *potionButton;
+
+    // Layout para organizar os botões de ação
+    QVBoxLayout *actionButtonLayout;
+
+    // Número de poções que o jogador possui
+    int playerPotions;
 };
 
 #endif // BATTLEWINDOW_H

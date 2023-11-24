@@ -1,6 +1,4 @@
 #include "startwindow.h"
-#include "characterselectionwindow.h"
-#include "battlewindow.h"  // Adiciona o include para a tela de batalha
 #include <QVBoxLayout>
 
 StartWindow::StartWindow(QWidget *parent)
@@ -20,13 +18,12 @@ StartWindow::StartWindow(QWidget *parent)
     // Adiciona a imagem do logo na parte superior
     QLabel *logoLabel = new QLabel;
     QPixmap logoImage(":/images/assets/logo.png");
-    logoLabel->setPixmap(logoImage.scaledToHeight(150));  // Ajuste conforme necessário
+    logoLabel->setPixmap(logoImage.scaledToHeight(150));
     logoLabel->setAlignment(Qt::AlignCenter);
 
     // Botões "Iniciar" e "Sair"
     QPushButton *startButton = new QPushButton("Iniciar", this);
     QPushButton *quitButton = new QPushButton("Sair", this);
-
     connect(startButton, &QPushButton::clicked, this, &StartWindow::startButtonClicked);
     connect(quitButton, &QPushButton::clicked, this, &StartWindow::quitButtonClicked);
 
@@ -57,7 +54,7 @@ StartWindow::StartWindow(QWidget *parent)
     mainLayout->addLayout(buttonLayout);
 
     // Test Remover Após Mesclar Telas ***
-    buttonLayout->addWidget(battleButton);  // Adiciona o botão "Batalha"
+    buttonLayout->addWidget(battleButton);
 
     // Configura o layout principal para a tela inicial
     setLayout(mainLayout);

@@ -6,6 +6,7 @@
 #include <QLabel>
 #include <QPushButton>
 
+// Classe para representar um nó na árvore de diálogo
 class DialogNode
 {
 public:
@@ -29,6 +30,7 @@ private:
     DialogNode* rightChild;     // Filho da direita
 };
 
+// Classe para representar a janela de diálogo com árvore de escolhas
 class DialogWindow : public QMainWindow
 {
     Q_OBJECT
@@ -47,7 +49,9 @@ private:
     void createWidgets();
 
     DialogNode* currentNode;    // Nó atual na árvore de diálogo
+
     QLabel* label;              // Rótulo para exibir o texto do nó
+
     QPushButton* leftButton;    // Botão para escolher a opção da esquerda
     QPushButton* rightButton;   // Botão para escolher a opção da direita
 };

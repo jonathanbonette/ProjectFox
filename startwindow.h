@@ -1,4 +1,4 @@
-    #ifndef STARTWINDOW_H
+#ifndef STARTWINDOW_H
 #define STARTWINDOW_H
 
 #include <QWidget>
@@ -12,20 +12,22 @@ class StartWindow : public QWidget
     Q_OBJECT
 
 public:
+    // Construtor
     StartWindow(QWidget *parent = nullptr);
 
 signals:
+    // Sinais emitidos quando os botões são clicados
     void startButtonClicked();
     void quitButtonClicked();
-    void selectCharacterButtonClicked();
 
     // Test Remover Após Mesclar Telas ***
     void battleButtonClicked();
+    void selectCharacterButtonClicked();
 
 public:
-    DialogWindow dialogWindow;                          // Declarando DialogWindow como uma variável membro
-    CharacterSelectionWindow characterSelectionWindow;  // Adiciona a janela de seleção de personagens
-    BattleWindow battleWindow;
+    DialogWindow dialogWindow;                          // Instância da janela de diálogo
+    CharacterSelectionWindow characterSelectionWindow;  // Instância da janela de seleção de personagens
+    BattleWindow battleWindow;                          // Instância da janela de batalha
 
 };
 

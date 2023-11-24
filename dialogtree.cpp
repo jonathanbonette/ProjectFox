@@ -58,10 +58,8 @@ void DialogWindow::createWidgets()
     setPalette(palette);
 
     // Configurações visuais para o rótulo
-    label->setAlignment(Qt::AlignCenter);   // Centralizar o texto
-    QFont font = label->font();             // Aumenta o tamanho da fonte
-    font.setPointSize(16);
-    label->setFont(font);
+    label->setAlignment(Qt::AlignCenter);
+    label->setFont(QFont("System", 36, QFont::Bold));
 
     leftButton = new QPushButton("Esquerda", this);
     rightButton = new QPushButton("Direita", this);
@@ -78,7 +76,7 @@ void DialogWindow::createWidgets()
     // Layout vertical para organizar o rótulo e os botões
     QVBoxLayout *layout = new QVBoxLayout;
     layout->addWidget(label);
-    layout->addLayout(buttonLayout);  // Adicione o layout dos botões ao layout principal
+    layout->addLayout(buttonLayout);
 
     // Widget central
     QWidget *centralWidget = new QWidget;

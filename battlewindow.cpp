@@ -28,6 +28,7 @@ BattleWindow::BattleWindow(QWidget *parent)
     // Botões para ações durante a batalha
     attackButton = new QPushButton("Atacar", this);
     potionButton = new QPushButton("Usar Potion", this);
+
     // Conecta os botões às respectivas funções
     connect(attackButton, &QPushButton::clicked, this, &BattleWindow::attack);
     connect(potionButton, &QPushButton::clicked, this, &BattleWindow::usePotion);
@@ -48,11 +49,17 @@ BattleWindow::BattleWindow(QWidget *parent)
     hpMessage->setFont(QFont("System", 24, QFont::Bold));
     hpMessage->setStyleSheet("color: white;");
 
+    resultAttackLabel = new QLabel(this);
+    resultAttackLabel->setAlignment(Qt::AlignTop);
+    resultAttackLabel->setFont(QFont("System", 24, QFont::Bold));
+    resultAttackLabel->setStyleSheet("color: white;");
+
     // Layout horizontal para os rótulos de saúde
     QHBoxLayout *healthLabelLayout = new QHBoxLayout;
     healthLabelLayout->addWidget(playerHealthLabel);
     healthLabelLayout->addStretch(); // Adiciona um espaço flexível entre os rótulos
     healthLabelLayout->addWidget(hpMessage);
+    healthLabelLayout->addWidget(resultAttackLabel); // Test *** (hora aparece hora nao aparece)
     healthLabelLayout->addStretch();
     healthLabelLayout->addWidget(enemyHealthLabel);
 
@@ -133,15 +140,17 @@ void BattleWindow::attack()
     updateHealthLabels();  // Atualiza os rótulos de saúde
 
     // Exibe mensagem de resultado do ataque do jogador
-    infoLabel->setText(playerResult.message);
+    resultAttackLabel->setText(playerResult.message);
+    resultAttackLabel->show();
 
     // Lógica para a resposta do inimigo
     if (enemy->getHealth() > 0) {
-        AttackResult enemyResult = enemy->attackEnemy(*player);
+        AttackResult enemyResult = enemy->attackEnemy(*player, false);
         updateHealthLabels();  // Atualiza os rótulos de saúde após o ataque do inimigo
 
         // Adiciona a mensagem de resultado do ataque do inimigo ao texto existente
-        infoLabel->setText(infoLabel->text() + "\n" + enemyResult.message);
+        resultAttackLabel->setText(resultAttackLabel->text() + "\n" + enemyResult.message);
+        resultAttackLabel->show();
     }
 
     // Verifica se a batalha terminou
@@ -150,6 +159,8 @@ void BattleWindow::attack()
 
 void BattleWindow::usePotion()
 {
+    resultAttackLabel->hide();
+
     // Lógica para o uso de poção durante a batalha
     if (playerPotions > 0) {
         // Recupera 20 de saúde
@@ -180,7 +191,7 @@ void BattleWindow::initStep()
 {
     // Mostra o texto inicial e o botão de iniciar
     infoLabel->setText("Você iniciou uma batalha");
-        startButton->show();
+    startButton->show();
 
     // Esconde a QLabel do inimigo e os botões de ação
     enemyImgLabel->hide();
@@ -229,5 +240,6 @@ void BattleWindow::checkBattleResult()
 }
 
 void Character::setHealth(int newHealth) {
+    // Método da classe Character para configurar a saúde
     health = newHealth;
 }
