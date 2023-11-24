@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "character.h"
+#include "qboxlayout.h"
 #include <QLabel>
 #include <QPushButton>
 
@@ -19,8 +20,6 @@ private slots:
     void attack();
     void usePotion();
     void initStep();
-
-    // Test ***
     void updateHealthLabels();
     void checkBattleResult();
 
@@ -34,11 +33,13 @@ private:
     QLabel *infoLabel;
     QPushButton *attackButton;
     QPushButton *potionButton;
-
-    // Test ***
-    int playerPotions;  // Número inicial de poções do jogador
     QLabel *playerHealthLabel;
     QLabel *enemyHealthLabel;
+    QLabel *enemyImgLabel;
+    QVBoxLayout *actionButtonLayout;
+    int playerPotions;
+    QLabel *hpMessage;
+
 };
 
 #endif // BATTLEWINDOW_H

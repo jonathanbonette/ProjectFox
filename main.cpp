@@ -1,9 +1,5 @@
 #include <QApplication>
 #include "dialogtree.h"
-
-// Test ***
-//#include "gamedata.h"
-
 #include "startwindow.h"
 #include "characterselectionwindow.h"
 

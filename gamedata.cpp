@@ -1,10 +1,3 @@
-//#include "gamedata.h"
-
-//GameData* GameData::_instance = 0;
-
-// Test ***
-// gamedata.cpp
-
 #include "gamedata.h"
 
 GameData::GameData() : player(nullptr), enemy(nullptr) {}

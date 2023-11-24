@@ -1,7 +1,9 @@
 #include "battlewindow.h"
 #include "gamedata.h"
 #include <QVBoxLayout>
+#include <QHBoxLayout>
 #include <QMovie>
+#include <QDebug>
 
 BattleWindow::BattleWindow(QWidget *parent)
     : QWidget(parent), player(nullptr), enemy(nullptr)
@@ -15,7 +17,9 @@ BattleWindow::BattleWindow(QWidget *parent)
 
     // Rótulo para exibir informações sobre a batalha
     infoLabel = new QLabel("Você iniciou uma batalha", this);
-    infoLabel->setAlignment(Qt::AlignCenter);
+    infoLabel->setAlignment(Qt::AlignBottom | Qt::AlignCenter);
+    infoLabel->setFont(QFont("System", 24, QFont::Bold));
+    infoLabel->setStyleSheet("color: white;");
 
     // Botão para iniciar a batalha
     startButton = new QPushButton("Iniciar Batalha", this);
@@ -28,12 +32,29 @@ BattleWindow::BattleWindow(QWidget *parent)
     connect(attackButton, &QPushButton::clicked, this, &BattleWindow::attack);
     connect(potionButton, &QPushButton::clicked, this, &BattleWindow::usePotion);
 
-    // Test ***
     // Criação dos rótulos de saúde
     playerHealthLabel = new QLabel(this);
     enemyHealthLabel = new QLabel(this);
     playerHealthLabel->setAlignment(Qt::AlignTop);
     enemyHealthLabel->setAlignment(Qt::AlignTop);
+    playerHealthLabel->setFont(QFont("System", 24, QFont::Bold));
+    playerHealthLabel->setStyleSheet("color: white;");
+    enemyHealthLabel->setFont(QFont("System", 24, QFont::Bold));
+    enemyHealthLabel->setStyleSheet("color: white;");
+
+    // Criação de um QLabel para exibir mensagens dinâmicas
+    hpMessage = new QLabel(this);
+    hpMessage->setAlignment(Qt::AlignTop);
+    hpMessage->setFont(QFont("System", 24, QFont::Bold));
+    hpMessage->setStyleSheet("color: white;");
+
+    // Layout horizontal para os rótulos de saúde
+    QHBoxLayout *healthLabelLayout = new QHBoxLayout;
+    healthLabelLayout->addWidget(playerHealthLabel);
+    healthLabelLayout->addStretch(); // Adiciona um espaço flexível entre os rótulos
+    healthLabelLayout->addWidget(hpMessage);
+    healthLabelLayout->addStretch();
+    healthLabelLayout->addWidget(enemyHealthLabel);
 
     // Layout horizontal para os botões (lado a lado)
     QHBoxLayout *buttonLayout = new QHBoxLayout;
@@ -44,19 +65,26 @@ BattleWindow::BattleWindow(QWidget *parent)
     // Layout vertical para organizar os elementos
     QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->addWidget(infoLabel);
-    mainLayout->addLayout(buttonLayout);
+    mainLayout->addLayout(healthLabelLayout);  // Adiciona o layout dos rótulos de saúde
+    mainLayout->addLayout(buttonLayout);        // Adiciona o layout dos botões
 
     // Configura o layout principal
     setLayout(mainLayout);
 
-    // Test ***
+    // Inicializa a QLabel do inimigo
+    enemyImgLabel = new QLabel(this);
+    enemyImgLabel->setAlignment(Qt::AlignCenter);
+    enemyImgLabel->hide();  // Esconde a QLabel do inimigo inicialmente
+
+    // Layout vertical para os botões de ação (inicialmente vazio)
+    actionButtonLayout = new QVBoxLayout;
+    mainLayout->addLayout(actionButtonLayout);
+
     // Configurar o jogador no GameData
     GameData *gameData = GameData::getInstance();
-
     // Cria instâncias dos personagens (exemplo: Guerreiro e Inimigo Peludo)
     Character *player = new Character("Asgorn", 100, 20, 10);
     Character *enemy = new Character("Inimigo Peludo", 80, 15, 8);
-
     gameData->setPlayer(player);
     // Configurar o inimigo no GameData
     gameData->setEnemy(enemy);
@@ -74,28 +102,32 @@ void BattleWindow::startBattle()
     infoLabel->hide();
 
     // Adiciona a imagem animada do inimigo
-    QLabel *enemyImg = new QLabel(this);
     QMovie *enemyMovie = new QMovie(":/images/assets/monster/reptile/idle.gif");
-    enemyImg->setMovie(enemyMovie);
+    enemyImgLabel->setMovie(enemyMovie);
     enemyMovie->start();
-    enemyImg->setAlignment(Qt::AlignCenter);
+    enemyImgLabel->setAlignment(Qt::AlignCenter);
 
-    // Define o tamanho desejado
-    enemyImg->setScaledContents(true);
+    // Defina a geometria para ocupar a tela inteira
+    enemyImgLabel->setGeometry(0, 0, width(), height());
 
-    // Adicione o QLabel ao layout principal
-    layout()->addWidget(enemyImg);
+    // Mostre a QLabel do inimigo
+    enemyImgLabel->show();
+
+    // Aumente a ordem de sobreposição para garantir que fique acima dos outros widgets
+    enemyImgLabel->lower();
 }
 
 void BattleWindow::attack()
 {
+    // Esconde a mensagem do Hp
+    hpMessage->hide();
+
     // Lógica para o ataque durante a batalha
     // Obtém as instâncias dos personagens do GameData
     GameData* gameData = GameData::getInstance();
     player = gameData->getPlayer();
     enemy = gameData->getEnemy();
 
-    // Test ***
     // Lógica para o ataque durante a batalha
     AttackResult playerResult = player->attackEnemy(*enemy);
     updateHealthLabels();  // Atualiza os rótulos de saúde
@@ -119,32 +151,59 @@ void BattleWindow::attack()
 void BattleWindow::usePotion()
 {
     // Lógica para o uso de poção durante a batalha
+    if (playerPotions > 0) {
+        // Recupera 20 de saúde
+        player->setHealth(player->getHealth() + 20);
+
+        // Atualiza o número de poções e os rótulos de saúde
+        playerPotions--;
+        updateHealthLabels();
+
+        // Exibe mensagem de recuperação de saúde
+        QString message = QString("Você recuperou 20 de HP. Poções sobrando: %1").arg(playerPotions);
+        hpMessage->setText(message);
+        hpMessage->show();
+
+        // Verifica se o jogador ainda tem poções disponíveis
+        if (playerPotions == 0) {
+            potionButton->setEnabled(false);  // Desativa o botão se não houver mais poções
+            hpMessage->setText("Você já usou todas as poções!");
+            hpMessage->show();
+        }
+    } else {
+        hpMessage->setText("Você já usou todas as poções!");
+        hpMessage->show();
+    }
 }
 
 void BattleWindow::initStep()
 {
-    qDebug() << "initStep() called";
-
     // Mostra o texto inicial e o botão de iniciar
     infoLabel->setText("Você iniciou uma batalha");
-    startButton->show();
+        startButton->show();
+
+    // Esconde a QLabel do inimigo e os botões de ação
+    enemyImgLabel->hide();
     attackButton->hide();
     potionButton->hide();
+
+    // Inicializa a quantidade inicial de poções
+    playerPotions = 10;
 }
 
 void BattleWindow::updateHealthLabels()
 {
-    // Test  ***
     // Atualiza os rótulos com informações de saúde dos personagens
     GameData* gameData = GameData::getInstance();
     Character* playerCharacter = gameData->getPlayer();
     Character* enemyCharacter = gameData->getEnemy();
 
-    if(playerCharacter && enemyCharacter){
-        qDebug() << playerCharacter->getHealth();
+    if (playerCharacter && enemyCharacter) {
+        // Posiciona o rótulo de saúde do jogador
         playerHealthLabel->setText(QString("Jogador:\nSaúde: %1").arg(playerCharacter->getHealth()));
-        enemyHealthLabel->setText(QString("Inimigo:\nSaúde: %1").arg(enemyCharacter->getHealth()));
 
+        // Posiciona o rótulo de saúde do inimigo
+        enemyHealthLabel->setText(QString("Inimigo:\nSaúde: %1").arg(enemyCharacter->getHealth()));
     } else {
         qDebug() << "player and enemy not working";
     }
@@ -165,6 +224,10 @@ void BattleWindow::checkBattleResult()
             resultMessage = "Você venceu!";
         }
         QMessageBox::information(this, "Fim da Batalha", resultMessage);
-        close();  // Fecha a janela de batalha
+        close();            // Fecha a janela de batalha
     }
+}
+
+void Character::setHealth(int newHealth) {
+    health = newHealth;
 }

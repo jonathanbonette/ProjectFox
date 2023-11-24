@@ -30,7 +30,7 @@ StartWindow::StartWindow(QWidget *parent)
     connect(startButton, &QPushButton::clicked, this, &StartWindow::startButtonClicked);
     connect(quitButton, &QPushButton::clicked, this, &StartWindow::quitButtonClicked);
 
-    // Test ***
+    // Test Remover Após Mesclar Telas ***
     // Adiciona o botão "Batalha"
     QPushButton *battleButton = new QPushButton("Batalha", this);
     connect(battleButton, &QPushButton::clicked, this, &StartWindow::battleButtonClicked);
@@ -56,7 +56,7 @@ StartWindow::StartWindow(QWidget *parent)
     // Adiciona o layout horizontal de botões ao layout principal
     mainLayout->addLayout(buttonLayout);
 
-    // Test ***
+    // Test Remover Após Mesclar Telas ***
     buttonLayout->addWidget(battleButton);  // Adiciona o botão "Batalha"
 
     // Configura o layout principal para a tela inicial

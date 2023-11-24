@@ -17,15 +17,13 @@ public:
 signals:
     void startButtonClicked();
     void quitButtonClicked();
-    void selectCharacterButtonClicked();  // Novo sinal para o botão "Selecionar Personagem"
+    void selectCharacterButtonClicked();
 
-    // Test ***
-    void battleButtonClicked();  // Novo sinal para o botão "Batalha"
-
-
+    // Test Remover Após Mesclar Telas ***
+    void battleButtonClicked();
 
 public:
-    DialogWindow dialogWindow;  // Declarando DialogWindow como uma variável membro
+    DialogWindow dialogWindow;                          // Declarando DialogWindow como uma variável membro
     CharacterSelectionWindow characterSelectionWindow;  // Adiciona a janela de seleção de personagens
     BattleWindow battleWindow;
 

@@ -25,6 +25,7 @@ public:
     AttackResult attackEnemy(Character &enemy);
 
     void takeDamage(int damage);
+    void setHealth(int newHealth);
 
 private:
     QString name;
