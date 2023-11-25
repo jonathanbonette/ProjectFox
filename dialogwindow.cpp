@@ -43,10 +43,8 @@ void DialogWindow::createWidgets()
     enemyImgLabel = new QLabel(this);
     enemyImgLabel->setAlignment(Qt::AlignCenter);
 
-    // Test
     QHBoxLayout *centerLayout = new QHBoxLayout;
     centerLayout->addWidget(enemyImgLabel);
-
 
     // Layout vertical para organizar o rótulo e os botões
     QVBoxLayout *layout = new QVBoxLayout;
@@ -62,22 +60,22 @@ void DialogWindow::createWidgets()
 
     // Criação da árvore de diálogo
     currentNode = new DialogNode("Você está na tela inicial. Escolha um caminho:");
-    DialogNode* nodeLeft = new DialogNode("Você foi para a esquerda. Escolha um novo caminho: (1)");
-    DialogNode* nodeRight = new DialogNode("Você foi para a direita. Escolha um novo caminho: (2)");
+    DialogNode* nodeLeft = new DialogNode("(1)");
+    DialogNode* nodeRight = new DialogNode("(2)");
 
     // Adicionando mais três telas de escolhas
-    DialogNode* nodeLeftLeft = new DialogNode("Você foi para a esquerda. Escolha um novo caminho: (3)");
-    DialogNode* nodeLeftRight = new DialogNode("Você foi para a direita. Escolha um novo caminho: (4)");
-    DialogNode* nodeRightLeft = new DialogNode("Você foi para a esquerda. Escolha um novo caminho: (5)");
-    DialogNode* nodeRightRight = new DialogNode("Você foi para a direita. Escolha um novo caminho: (6)");
-    DialogNode* nodeLeftLeftLeft = new DialogNode("Você foi para a esquerda. Fim (7)");
-    DialogNode* nodeLeftLeftRight = new DialogNode("Você foi para a direita. Fim (8)");
-    DialogNode* nodeLeftRightLeft = new DialogNode("Você foi para a esquerda. Fim (9)");
-    DialogNode* nodeLeftRightRight = new DialogNode("Você foi para a direita. Fim (10)");
-    DialogNode* nodeRightLeftLeft = new DialogNode("Você foi para a esquerda. Fim (11)");
-    DialogNode* nodeRightLeftRight = new DialogNode("Você foi para a direita. Fim (12).");
-    DialogNode* nodeRightRightLeft = new DialogNode("Você foi para a esquerda. Fim (13)");
-    DialogNode* nodeRightRightRight = new DialogNode("Você foi para a direita. Fim (14)");
+    DialogNode* nodeLeftLeft = new DialogNode("(3)");
+    DialogNode* nodeLeftRight = new DialogNode("(4)");
+    DialogNode* nodeRightLeft = new DialogNode("(5)");
+    DialogNode* nodeRightRight = new DialogNode("(6)");
+    DialogNode* nodeLeftLeftLeft = new DialogNode("(7)");
+    DialogNode* nodeLeftLeftRight = new DialogNode("(8)");
+    DialogNode* nodeLeftRightLeft = new DialogNode("(9)");
+    DialogNode* nodeLeftRightRight = new DialogNode("(10)");
+    DialogNode* nodeRightLeftLeft = new DialogNode("(11)");
+    DialogNode* nodeRightLeftRight = new DialogNode("(12).");
+    DialogNode* nodeRightRightLeft = new DialogNode("(13)");
+    DialogNode* nodeRightRightRight = new DialogNode("(14)");
 
     currentNode->setLeftChild(nodeLeft);
     currentNode->setRightChild(nodeRight);
@@ -139,7 +137,7 @@ void DialogWindow::handleSpecialNode()
 {
     qDebug() << "handleSpecialNode called for node:" << currentNode->getText();
 
-    if (currentNode->getText() == "Você foi para a esquerda. Escolha um novo caminho: (5)") {
+    if (currentNode->getText() == "(2)") {
         // Background da tela
         QPixmap backgroundImage(":/images/assets/backgrounds/17.png");
         QPalette palette;
@@ -166,7 +164,7 @@ void DialogWindow::handleSpecialNode()
         label->show();
     }
 
-    if (currentNode->getText() == "Você foi para a esquerda. Fim (11)") {
+    if (currentNode->getText() == "(11)") {
 
         QPixmap backgroundImage(":/images/assets/backgrounds/22.png");
         QPalette palette;

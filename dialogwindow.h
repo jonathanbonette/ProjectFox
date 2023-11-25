@@ -21,7 +21,6 @@ public slots:
     // Slot para lidar com as escolhas do usuário
     void handleChoice();
 
-    // Test 1 ***
     void handleSpecialNode();
 
 private:
