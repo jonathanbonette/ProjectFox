@@ -12,7 +12,8 @@ class BattleWindow : public QWidget
     Q_OBJECT
 
 public:
-    BattleWindow(QWidget *parent = nullptr);
+    // Adiciona o tipo de inimigo ao construtor da clase
+    BattleWindow(QWidget *parent, const QString &enemyType);
 
     // Define os personagens que participarão da batalha
     void setCharacters(Character *player, Character *enemy);
@@ -30,7 +31,6 @@ signals:
     // Sinal emitido quando a batalha é iniciada com os personagens definidos
     void battleStarted(Character *player, Character *enemy);
 
-    // Test battle node
     void battleFinished();
 
 private:
@@ -56,6 +56,9 @@ private:
 
     // Número de poções que o jogador possui
     int playerPotions;
+
+    // Armazena o tipo de inimigo
+    QString enemyType;
 };
 
 #endif // BATTLEWINDOW_H

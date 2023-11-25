@@ -26,7 +26,6 @@ public:
     void setPlayerAttackResult(const AttackResult& result);
     void setEnemyAttackResult(const AttackResult& result);
 
-    // Test ***
     // Métodos para configurar e obter a janela de diálogo
     void setDialogWindow(DialogWindow* dialogWindow) {
         this->dialogWindow = dialogWindow;
@@ -46,7 +45,6 @@ private:
     AttackResult playerAttackResult;
     AttackResult enemyAttackResult;
 
-    // Test ***
     // Membro para armazenar a janela de diálogo
     DialogWindow* dialogWindow;
 };

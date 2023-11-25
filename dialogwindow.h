@@ -37,7 +37,6 @@ private:
     QPushButton* leftButton;    // Botão para escolher a opção da esquerda
     QPushButton* rightButton;   // Botão para escolher a opção da direita
 
-    // Test battle node
     BattleWindow* battleWindow;
 };
 

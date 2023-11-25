@@ -5,8 +5,8 @@
 #include <QMovie>
 #include <QDebug>
 
-BattleWindow::BattleWindow(QWidget *parent)
-    : QWidget(parent), player(nullptr), enemy(nullptr)
+BattleWindow::BattleWindow(QWidget *parent, const QString &enemyType)
+    : QWidget(parent), player(nullptr), enemy(nullptr), enemyType(enemyType)
 {
     // Configuração da tela de batalha
     setFixedSize(640, 480);
@@ -59,7 +59,7 @@ BattleWindow::BattleWindow(QWidget *parent)
     healthLabelLayout->addWidget(playerHealthLabel);
     healthLabelLayout->addStretch(); // Adiciona um espaço flexível entre os rótulos
     healthLabelLayout->addWidget(hpMessage);
-    healthLabelLayout->addWidget(resultAttackLabel); // Test *** (hora aparece hora nao aparece)
+    healthLabelLayout->addWidget(resultAttackLabel);
     healthLabelLayout->addStretch();
     healthLabelLayout->addWidget(enemyHealthLabel);
 
@@ -87,15 +87,20 @@ BattleWindow::BattleWindow(QWidget *parent)
     actionButtonLayout = new QVBoxLayout;
     mainLayout->addLayout(actionButtonLayout);
 
-    // Configurar o jogador no GameData
+    // Configura o jogador no GameData
     GameData *gameData = GameData::getInstance();
-    // Cria instâncias dos personagens (exemplo: Guerreiro e Inimigo Peludo)
-    //Character *player = new Character("Asgorn", 100, 20, 10);
-    Character *enemy = new Character("Inimigo Peludo", 180, 15, 8);
     gameData->getPlayer();
-    //gameData->setPlayer(player);
-    // Configurar o inimigo no GameData
+
+    // Cria o inimigo com base no tipo especificado
+    if (enemyType == "InimigoPeludo") {
+        enemy = new Character("Inimigo Peludo", 50, 15, 10);
+    } else if (enemyType == "GuerreiroGigante") {
+        enemy = new Character("Guerreiro Gigante", 50, 20, 35);
+    }
+
     gameData->setEnemy(enemy);
+
+    // qDebug() << gameData->getEnemy()->getName();
 
     // Inicializa a primeira etapa
     initStep();
@@ -109,11 +114,21 @@ void BattleWindow::startBattle()
     potionButton->show();
     infoLabel->hide();
 
-    // Adiciona a imagem animada do inimigo
-    QMovie *enemyMovie = new QMovie(":/images/assets/monster/reptile/idle.gif");
-    enemyImgLabel->setMovie(enemyMovie);
-    enemyMovie->start();
-    enemyImgLabel->setAlignment(Qt::AlignCenter);
+    // Cria a imagemdo inimigo com base no tipo especificado
+    if (enemyType == "InimigoPeludo") {
+
+        QMovie *enemyMovie = new QMovie(":/images/assets/monster/reptile/idle.gif");
+        enemyImgLabel->setMovie(enemyMovie);
+        enemyMovie->start();
+        enemyImgLabel->setAlignment(Qt::AlignCenter);
+
+    } else if (enemyType == "GuerreiroGigante") {
+
+        QMovie *enemyMovie = new QMovie(":/images/assets/monster/giant/idle.gif");
+        enemyImgLabel->setMovie(enemyMovie);
+        enemyMovie->start();
+        enemyImgLabel->setAlignment(Qt::AlignCenter);
+    }
 
     // Defina a geometria para ocupar a tela inteira
     enemyImgLabel->setGeometry(0, 0, width(), height());
@@ -121,7 +136,7 @@ void BattleWindow::startBattle()
     // Mostre a QLabel do inimigo
     enemyImgLabel->show();
 
-    // Aumente a ordem de sobreposição para garantir que fique acima dos outros widgets
+    // Abaixa a ordem de sobreposição para que a imagem fiquei abaixo dos botões
     enemyImgLabel->lower();
 }
 
@@ -130,7 +145,6 @@ void BattleWindow::attack()
     // Esconde a mensagem do Hp
     hpMessage->hide();
 
-    // Lógica para o ataque durante a batalha
     // Obtém as instâncias dos personagens do GameData
     GameData* gameData = GameData::getInstance();
     player = gameData->getPlayer();
@@ -221,27 +235,6 @@ void BattleWindow::updateHealthLabels()
     }
 }
 
-//void BattleWindow::checkBattleResult()
-//{
-//    // Verifica se a batalha terminou (saúde de jogador ou inimigo <= 0)
-//    GameData* gameData = GameData::getInstance();
-//    player = gameData->getPlayer();
-//    enemy = gameData->getEnemy();
-
-//    if (player->getHealth() <= 0 || enemy->getHealth() <= 0) {
-//        QString resultMessage;
-//        if (player->getHealth() <= 0) {
-//            resultMessage = "Você foi derrotado!";
-//        } else {
-//            resultMessage = "Você venceu!";
-//        }
-//        QMessageBox::information(this, "Fim da Batalha", resultMessage);
-//        close();            // Fecha a janela de batalha
-//    }
-//}
-
-// Test battle node
-// battlewindow.cpp
 void BattleWindow::checkBattleResult()
 {
     // Verifica se a batalha terminou (saúde de jogador ou inimigo <= 0)
@@ -265,7 +258,6 @@ void BattleWindow::checkBattleResult()
         close();
     }
 }
-
 
 void Character::setHealth(int newHealth) {
     // Método da classe Character para configurar a saúde

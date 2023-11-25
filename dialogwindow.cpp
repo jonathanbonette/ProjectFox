@@ -1,13 +1,7 @@
 #include "dialogwindow.h"
-
-// Test battlenode
 #include "battlewindow.h"
-
 #include "gamedata.h"
-
-// Test battle node
-#include "battlewindow.h"  // Inclua o cabeçalho da tela de batalha
-
+#include "battlewindow.h"
 #include <QMovie>
 
 DialogWindow::DialogWindow(QWidget *parent)
@@ -122,7 +116,6 @@ void DialogWindow::handleChoice()
         // Atualiza o texto exibido no rótulo
         label->setText(currentNode->getText());
 
-        // Test 1 ***
         handleSpecialNode();
 
         // Desativa os botões se não houver mais escolhas
@@ -143,7 +136,7 @@ void DialogWindow::handleChoice()
 
 void DialogWindow::handleSpecialNode()
 {
-    qDebug() << "handleSpecialNode called for node:" << currentNode->getText();
+//    qDebug() << "handleSpecialNode called for node:" << currentNode->getText();
 
     if (currentNode->getText() == "(2)") {
         // Background da tela
@@ -172,7 +165,6 @@ void DialogWindow::handleSpecialNode()
         label->show();
     }
 
-    // Test battle node
     if (currentNode->getText() == "(5)") {
 
         QPixmap backgroundImage(":/images/assets/backgrounds/22.png");
@@ -182,12 +174,14 @@ void DialogWindow::handleSpecialNode()
 
         enemyImgLabel->hide();
 
-        // Se desejar abrir uma tela de batalha, você pode fazer algo como:
-        BattleWindow* battleWindow = new BattleWindow(this);
+        // Cria uma tela de batalha
+        BattleWindow* battleWindow = new BattleWindow(this, "GuerreiroGigante");
+
+        leftButton->hide();
+        rightButton->hide();
+        label->hide();
+
         battleWindow->show();
-
-
-        // Test battle node
 
         // Verifica se a batalha terminou (saúde de jogador ou inimigo <= 0)
         GameData* gameData = GameData::getInstance();
@@ -196,7 +190,7 @@ void DialogWindow::handleSpecialNode()
         connect(battleWindow, &BattleWindow::battleFinished, this, [=]() {
             // Verifica se o jogador foi derrotado
             if (playerCharacter->getHealth() <= 0) {
-                qDebug() << "Derrota";
+//                qDebug() << "Derrota";
 
                 // Exibe o texto informando que a jornada terminou
                 label->setText("Sua jornada terminou...");
@@ -206,10 +200,13 @@ void DialogWindow::handleSpecialNode()
                 leftButton->hide();
                 rightButton->hide();
             }
+
+            label->show();
+            leftButton->show();
+            rightButton->show();
         });
 
     }
-
 
     if (currentNode->getText() == "(11)") {
 

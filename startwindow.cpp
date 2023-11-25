@@ -22,18 +22,11 @@ StartWindow::StartWindow(QWidget *parent)
     logoLabel->setAlignment(Qt::AlignCenter);
 
     // Botões "Iniciar" e "Sair"
-    QPushButton *startButton = new QPushButton("Iniciar", this);
     QPushButton *quitButton = new QPushButton("Sair", this);
-    connect(startButton, &QPushButton::clicked, this, &StartWindow::startButtonClicked);
     connect(quitButton, &QPushButton::clicked, this, &StartWindow::quitButtonClicked);
 
-    // Test Remover Após Mesclar Telas ***
-    // Adiciona o botão "Batalha"
-    QPushButton *battleButton = new QPushButton("Batalha", this);
-    connect(battleButton, &QPushButton::clicked, this, &StartWindow::battleButtonClicked);
-
     // Adiciona o botão "Selecionar Personagem"
-    QPushButton *selectCharacterButton = new QPushButton("Selecionar Personagem", this);
+    QPushButton *selectCharacterButton = new QPushButton("Iniciar Jornada", this);
     connect(selectCharacterButton, &QPushButton::clicked, this, &StartWindow::selectCharacterButtonClicked);
 
     // Layout vertical para organizar os elementos
@@ -46,15 +39,11 @@ StartWindow::StartWindow(QWidget *parent)
     QHBoxLayout *buttonLayout = new QHBoxLayout;
 
     // Adiciona os botões ao layout horizontal
-    buttonLayout->addWidget(startButton);
-    buttonLayout->addWidget(quitButton);
     buttonLayout->addWidget(selectCharacterButton);
+    buttonLayout->addWidget(quitButton);
 
     // Adiciona o layout horizontal de botões ao layout principal
     mainLayout->addLayout(buttonLayout);
-
-    // Test Remover Após Mesclar Telas ***
-    buttonLayout->addWidget(battleButton);
 
     // Configura o layout principal para a tela inicial
     setLayout(mainLayout);
