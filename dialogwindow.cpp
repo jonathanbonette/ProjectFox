@@ -1,5 +1,13 @@
 #include "dialogwindow.h"
+
+// Test battlenode
+#include "battlewindow.h"
+
 #include "gamedata.h"
+
+// Test battle node
+#include "battlewindow.h"  // Inclua o cabeçalho da tela de batalha
+
 #include <QMovie>
 
 DialogWindow::DialogWindow(QWidget *parent)
@@ -164,6 +172,45 @@ void DialogWindow::handleSpecialNode()
         label->show();
     }
 
+    // Test battle node
+    if (currentNode->getText() == "(5)") {
+
+        QPixmap backgroundImage(":/images/assets/backgrounds/22.png");
+        QPalette palette;
+        palette.setBrush(backgroundRole(), backgroundImage);
+        setPalette(palette);
+
+        enemyImgLabel->hide();
+
+        // Se desejar abrir uma tela de batalha, você pode fazer algo como:
+        BattleWindow* battleWindow = new BattleWindow(this);
+        battleWindow->show();
+
+
+        // Test battle node
+
+        // Verifica se a batalha terminou (saúde de jogador ou inimigo <= 0)
+        GameData* gameData = GameData::getInstance();
+        Character* playerCharacter = gameData->getPlayer();
+
+        connect(battleWindow, &BattleWindow::battleFinished, this, [=]() {
+            // Verifica se o jogador foi derrotado
+            if (playerCharacter->getHealth() <= 0) {
+                qDebug() << "Derrota";
+
+                // Exibe o texto informando que a jornada terminou
+                label->setText("Sua jornada terminou...");
+                label->show();
+
+                // Esconde os botões de escolha
+                leftButton->hide();
+                rightButton->hide();
+            }
+        });
+
+    }
+
+
     if (currentNode->getText() == "(11)") {
 
         QPixmap backgroundImage(":/images/assets/backgrounds/22.png");
@@ -174,4 +221,3 @@ void DialogWindow::handleSpecialNode()
         enemyImgLabel->hide();
     }
 }
-

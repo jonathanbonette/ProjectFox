@@ -1,6 +1,7 @@
 #ifndef DIALOGWINDOW_H
 #define DIALOGWINDOW_H
 
+#include "battlewindow.h"
 #include "dialogtree.h"
 #include <QMainWindow>
 #include <QObject>
@@ -35,6 +36,9 @@ private:
 
     QPushButton* leftButton;    // Botão para escolher a opção da esquerda
     QPushButton* rightButton;   // Botão para escolher a opção da direita
+
+    // Test battle node
+    BattleWindow* battleWindow;
 };
 
 #endif // DIALOGWINDOW_H

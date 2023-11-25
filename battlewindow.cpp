@@ -90,9 +90,10 @@ BattleWindow::BattleWindow(QWidget *parent)
     // Configurar o jogador no GameData
     GameData *gameData = GameData::getInstance();
     // Cria instâncias dos personagens (exemplo: Guerreiro e Inimigo Peludo)
-    Character *player = new Character("Asgorn", 100, 20, 10);
-    Character *enemy = new Character("Inimigo Peludo", 80, 15, 8);
-    gameData->setPlayer(player);
+    //Character *player = new Character("Asgorn", 100, 20, 10);
+    Character *enemy = new Character("Inimigo Peludo", 180, 15, 8);
+    gameData->getPlayer();
+    //gameData->setPlayer(player);
     // Configurar o inimigo no GameData
     gameData->setEnemy(enemy);
 
@@ -220,6 +221,27 @@ void BattleWindow::updateHealthLabels()
     }
 }
 
+//void BattleWindow::checkBattleResult()
+//{
+//    // Verifica se a batalha terminou (saúde de jogador ou inimigo <= 0)
+//    GameData* gameData = GameData::getInstance();
+//    player = gameData->getPlayer();
+//    enemy = gameData->getEnemy();
+
+//    if (player->getHealth() <= 0 || enemy->getHealth() <= 0) {
+//        QString resultMessage;
+//        if (player->getHealth() <= 0) {
+//            resultMessage = "Você foi derrotado!";
+//        } else {
+//            resultMessage = "Você venceu!";
+//        }
+//        QMessageBox::information(this, "Fim da Batalha", resultMessage);
+//        close();            // Fecha a janela de batalha
+//    }
+//}
+
+// Test battle node
+// battlewindow.cpp
 void BattleWindow::checkBattleResult()
 {
     // Verifica se a batalha terminou (saúde de jogador ou inimigo <= 0)
@@ -235,9 +257,15 @@ void BattleWindow::checkBattleResult()
             resultMessage = "Você venceu!";
         }
         QMessageBox::information(this, "Fim da Batalha", resultMessage);
-        close();            // Fecha a janela de batalha
+
+        // Emite o sinal indicando que a batalha terminou
+        emit battleFinished();
+
+        // Fecha a janela de batalha
+        close();
     }
 }
+
 
 void Character::setHealth(int newHealth) {
     // Método da classe Character para configurar a saúde

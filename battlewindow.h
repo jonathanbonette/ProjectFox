@@ -30,6 +30,9 @@ signals:
     // Sinal emitido quando a batalha é iniciada com os personagens definidos
     void battleStarted(Character *player, Character *enemy);
 
+    // Test battle node
+    void battleFinished();
+
 private:
     // Personagens envolvidos na batalha
     Character *player;
