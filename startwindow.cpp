@@ -21,11 +21,10 @@ StartWindow::StartWindow(QWidget *parent)
     logoLabel->setPixmap(logoImage.scaledToHeight(150));
     logoLabel->setAlignment(Qt::AlignCenter);
 
-    // Botões "Iniciar" e "Sair"
+    // Botões "Selecionar Personagem" e "Sair"
     QPushButton *quitButton = new QPushButton("Sair", this);
     connect(quitButton, &QPushButton::clicked, this, &StartWindow::quitButtonClicked);
 
-    // Adiciona o botão "Selecionar Personagem"
     QPushButton *selectCharacterButton = new QPushButton("Iniciar Jornada", this);
     connect(selectCharacterButton, &QPushButton::clicked, this, &StartWindow::selectCharacterButtonClicked);
 

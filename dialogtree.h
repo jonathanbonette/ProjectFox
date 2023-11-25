@@ -9,7 +9,8 @@ class DialogNode
 {
 public:
     // Construtor que recebe o texto do nó
-    DialogNode(const QString &text);
+    DialogNode(QString text, QString leftButtonText = "", QString rightButtonText = "");
+
 
     // Retorna o texto do nó
     const QString& getText() const;
@@ -22,10 +23,16 @@ public:
     void setLeftChild(DialogNode* node);
     void setRightChild(DialogNode* node);
 
+    QString getLeftButtonText() const;
+    QString getRightButtonText() const;
+
 private:
     QString text;               // Texto do nó
     DialogNode* leftChild;      // Filho da esquerda
     DialogNode* rightChild;     // Filho da direita
+
+    QString leftButtonText;
+    QString rightButtonText;
 };
 
 #endif // DIALOGTREE_H

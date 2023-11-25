@@ -21,8 +21,8 @@ public:
 public slots:
     // Slot para lidar com as escolhas do usuário
     void handleChoice();
-
     void handleSpecialNode();
+    void handleAcceptGift();
 
 private:
     // Método para criar os widgets da janela
@@ -32,10 +32,11 @@ private:
 
     QLabel* label;              // Rótulo para exibir o texto do nó
 
-    QLabel *enemyImgLabel;
+    QLabel *npcImgLabel;
 
-    QPushButton* leftButton;    // Botão para escolher a opção da esquerda
-    QPushButton* rightButton;   // Botão para escolher a opção da direita
+    QPushButton* leftButton;        // Botão para escolher a opção da esquerda
+    QPushButton* rightButton;       // Botão para escolher a opção da direita
+    QPushButton* acceptGiftButton;  // Botão de aceitar o presente
 
     BattleWindow* battleWindow;
 };

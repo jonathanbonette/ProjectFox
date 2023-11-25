@@ -38,5 +38,7 @@
         <file>assets/monster/reptile/idle.gif</file>
         <file>assets/char/mage/idle.gif</file>
         <file>assets/monster/giant/idle.gif</file>
+        <file>assets/monster/ghost/idle.gif</file>
+        <file>assets/item/41.png</file>
     </qresource>
 </RCC>
