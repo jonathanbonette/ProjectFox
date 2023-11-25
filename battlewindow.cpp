@@ -93,9 +93,9 @@ BattleWindow::BattleWindow(QWidget *parent, const QString &enemyType)
 
     // Cria o inimigo com base no tipo especificado
     if (enemyType == "InimigoPeludo") {
-        enemy = new Character("Inimigo Peludo", 50, 15, 10);
+        enemy = new Character("Inimigo Peludo", 80, 15, 10);
     } else if (enemyType == "GuerreiroGigante") {
-        enemy = new Character("Guerreiro Gigante", 50, 20, 35);
+        enemy = new Character("Guerreiro Gigante", 150, 20, 35);
     }
 
     gameData->setEnemy(enemy);

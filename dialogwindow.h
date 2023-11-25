@@ -24,7 +24,7 @@ public slots:
     void handleSpecialNode();
     void handleAcceptGift();
 
-private:
+public:
     // Método para criar os widgets da janela
     void createWidgets();
 
