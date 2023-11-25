@@ -16,3 +16,5 @@ DialogNode* DialogNode::getRightChild() const { return rightChild; }
 void DialogNode::setLeftChild(DialogNode* node) { leftChild = node; }
 
 void DialogNode::setRightChild(DialogNode* node) { rightChild = node; }
+
+

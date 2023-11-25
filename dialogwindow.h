@@ -32,7 +32,6 @@ private:
 
     QLabel* label;              // Rótulo para exibir o texto do nó
 
-    // Testt 1 ***
     QLabel *enemyImgLabel;
 
     QPushButton* leftButton;    // Botão para escolher a opção da esquerda

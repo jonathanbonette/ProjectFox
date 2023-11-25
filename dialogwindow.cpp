@@ -39,9 +39,20 @@ void DialogWindow::createWidgets()
     buttonLayout->addWidget(leftButton);
     buttonLayout->addWidget(rightButton);
 
+    // Inicializa a QLabel do inimigo
+    enemyImgLabel = new QLabel(this);
+    enemyImgLabel->setAlignment(Qt::AlignCenter);
+
+    // Test
+    QHBoxLayout *centerLayout = new QHBoxLayout;
+    centerLayout->addWidget(enemyImgLabel);
+
+
     // Layout vertical para organizar o rótulo e os botões
     QVBoxLayout *layout = new QVBoxLayout;
     layout->addWidget(label);
+    layout->addWidget(enemyImgLabel);
+    layout->addSpacing(40);
     layout->addLayout(buttonLayout);
 
     // Widget central
@@ -124,32 +135,24 @@ void DialogWindow::handleChoice()
     }
 }
 
-// Test 1 ***
 void DialogWindow::handleSpecialNode()
 {
     qDebug() << "handleSpecialNode called for node:" << currentNode->getText();
-    // Adicione lógica personalizada para nós especiais aqui
-    // Por exemplo, exibir uma imagem ou texto adicional.
+
     if (currentNode->getText() == "Você foi para a esquerda. Escolha um novo caminho: (5)") {
+        // Background da tela
         QPixmap backgroundImage(":/images/assets/backgrounds/17.png");
         QPalette palette;
         palette.setBrush(backgroundRole(), backgroundImage);
         setPalette(palette);
 
-
-
-        // Inicializa a QLabel do inimigo
-        enemyImgLabel = new QLabel(this);
-        enemyImgLabel->setAlignment(Qt::AlignCenter);
-
         // Adiciona a imagem animada do inimigo
         QMovie *enemyMovie = new QMovie(":/images/assets/char/mage/idle.gif");
         enemyImgLabel->setMovie(enemyMovie);
+        // enemyMovie->setScaledSize(QSize(303,270));
         enemyMovie->start();
-        enemyImgLabel->setAlignment(Qt::AlignCenter);
 
-        // Defina a geometria para ocupar a tela inteira
-        enemyImgLabel->setGeometry(0, 0, width(), height());
+        enemyImgLabel->setAlignment(Qt::AlignCenter);
 
         // Mostre a QLabel do inimigo
         enemyImgLabel->show();
@@ -158,10 +161,19 @@ void DialogWindow::handleSpecialNode()
         enemyImgLabel->lower();
 
         label->setText("Você se depara com um aventureiro no caminho.\nEle olha fixamente para a esquerda, como se estivesse\nse preparando para algo de extrema importância.\n\nVocê decide ir para a Esquerda onde o aventureiro está olhando\nou segue seu caminho para a Direita?\nAliás, não é da tua conta o que ele está olhando.");
-
         label->setAlignment(Qt::AlignTop | Qt::AlignCenter);
-
+        // label->setStyleSheet("color: white;");
         label->show();
-        // ...
+    }
+
+    if (currentNode->getText() == "Você foi para a esquerda. Fim (11)") {
+
+        QPixmap backgroundImage(":/images/assets/backgrounds/22.png");
+        QPalette palette;
+        palette.setBrush(backgroundRole(), backgroundImage);
+        setPalette(palette);
+
+        enemyImgLabel->hide();
+    }
 }
-}
+
