@@ -40,5 +40,7 @@
         <file>assets/monster/giant/idle.gif</file>
         <file>assets/monster/ghost/idle.gif</file>
         <file>assets/item/41.png</file>
+        <file>assets/item/chest/items.png</file>
+        <file>assets/monster/mimic/idle.gif</file>
     </qresource>
 </RCC>

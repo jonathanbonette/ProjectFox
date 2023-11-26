@@ -2,6 +2,7 @@
 
 #include "dialoghelper.h"
 #include "dialogwindow.h"
+#include <QLabel>
 #include <QMovie>
 
 void DialogHelper::updateBackground(DialogWindow *window, const QString &imagePath)
@@ -18,6 +19,15 @@ void DialogHelper::updateMovieImage(DialogWindow *window, const QString &moviePa
     window->npcImgLabel->setMovie(movie);
     movie->start();
 
+    window->npcImgLabel->setAlignment(Qt::AlignCenter);
+    window->npcImgLabel->show();
+    window->npcImgLabel->lower();
+}
+
+void DialogHelper::updateImageLabel(DialogWindow *window, const QString &imagePngPath)
+{
+    QPixmap image(imagePngPath);
+    window->npcImgLabel->setPixmap(image);
     window->npcImgLabel->setAlignment(Qt::AlignCenter);
     window->npcImgLabel->show();
     window->npcImgLabel->lower();

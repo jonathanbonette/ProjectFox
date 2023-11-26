@@ -14,6 +14,7 @@ public:
     static void hideChoiceButtons(class DialogWindow *window);
     static void showChoiceButtons(class DialogWindow *window);
     static void updateMovieImage(DialogWindow *window, const QString &moviePath);
+    static void updateImageLabel(DialogWindow *window, const QString &imagePngPath);
 
     // ... outras funções auxiliares conforme necessário
 };

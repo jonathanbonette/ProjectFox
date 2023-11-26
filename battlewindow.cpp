@@ -8,6 +8,9 @@
 BattleWindow::BattleWindow(QWidget *parent, const QString &enemyType)
     : QWidget(parent), player(nullptr), enemy(nullptr), enemyType(enemyType)
 {
+    // Inicia a quantidade total das poções
+    playerPotions = 10;
+
     // Configuração da tela de batalha
     setFixedSize(640, 480);
     QPixmap backgroundImage(":/images/assets/backgrounds/12.png");
@@ -96,6 +99,8 @@ BattleWindow::BattleWindow(QWidget *parent, const QString &enemyType)
         enemy = new Character("Inimigo Peludo", 80, 15, 10);
     } else if (enemyType == "GuerreiroGigante") {
         enemy = new Character("Guerreiro Gigante", 150, 20, 35);
+    } else if (enemyType == "Mimico") {
+        enemy = new Character("Mimico", 50, 50, 10);
     }
 
     gameData->setEnemy(enemy);
@@ -125,6 +130,13 @@ void BattleWindow::startBattle()
     } else if (enemyType == "GuerreiroGigante") {
 
         QMovie *enemyMovie = new QMovie(":/images/assets/monster/giant/idle.gif");
+        enemyImgLabel->setMovie(enemyMovie);
+        enemyMovie->start();
+        enemyImgLabel->setAlignment(Qt::AlignCenter);
+
+    } else if (enemyType == "Mimico") {
+
+        QMovie *enemyMovie = new QMovie(":/images/assets/monster/mimic/idle.gif");
         enemyImgLabel->setMovie(enemyMovie);
         enemyMovie->start();
         enemyImgLabel->setAlignment(Qt::AlignCenter);
@@ -214,7 +226,7 @@ void BattleWindow::initStep()
     potionButton->hide();
 
     // Inicializa a quantidade inicial de poções
-    playerPotions = 10;
+//    playerPotions = 10;
 }
 
 void BattleWindow::updateHealthLabels()

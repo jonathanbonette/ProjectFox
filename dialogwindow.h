@@ -23,6 +23,7 @@ public slots:
     void handleChoice();
     void handleSpecialNode();
     void handleAcceptGift();
+    void handleGetItems();
 
 public:
     // Método para criar os widgets da janela
@@ -37,6 +38,7 @@ public:
     QPushButton* leftButton;        // Botão para escolher a opção da esquerda
     QPushButton* rightButton;       // Botão para escolher a opção da direita
     QPushButton* acceptGiftButton;  // Botão de aceitar o presente
+    QPushButton* getItemsButton;  // Botão de pegar os itens
 
     BattleWindow* battleWindow;
 };

@@ -45,11 +45,20 @@ void DialogWindow::createWidgets()
     acceptGiftButtonLayout->addWidget(acceptGiftButton);
     acceptGiftButton->hide();
 
+    // Adiciona o botão "Pegar os espólios"
+    getItemsButton = new QPushButton("Pegar os espólios", this);
+    connect(getItemsButton, &QPushButton::clicked, this, &DialogWindow::handleGetItems);
+    QHBoxLayout *getItemsButtonLayout = new QHBoxLayout;
+    // Adicione o botão à layout
+    getItemsButtonLayout->addWidget(getItemsButton);
+    getItemsButton->hide();
+
     // Layout horizontal para os botões (lado a lado)
     QHBoxLayout *buttonLayout = new QHBoxLayout;
     buttonLayout->addWidget(leftButton);
     buttonLayout->addWidget(rightButton);
     buttonLayout->addWidget(acceptGiftButton);
+    buttonLayout->addWidget(getItemsButton);
 
     // Inicializa a QLabel do inimigo
     npcImgLabel = new QLabel(this);
@@ -77,7 +86,7 @@ void DialogWindow::createWidgets()
 
     // Adicionando mais três telas de escolhas
     DialogNode* nodeLeftLeft = new DialogNode("(3)","Seguir caminho");
-    DialogNode* nodeLeftRight = new DialogNode("(4)");
+    DialogNode* nodeLeftRight = new DialogNode("(4)","Andar em direção do campo aberto","Prosseguir rumo ao desconhecido");
     DialogNode* nodeRightLeft = new DialogNode("(5)","Dar as boas novas ao aventureiro", "Passar pelo portão");
     DialogNode* nodeRightRight = new DialogNode("(6)");
     DialogNode* nodeLeftLeftLeft = new DialogNode("(7)");
@@ -85,7 +94,7 @@ void DialogWindow::createWidgets()
     DialogNode* nodeLeftRightLeft = new DialogNode("(9)");
     DialogNode* nodeLeftRightRight = new DialogNode("(10)");
     DialogNode* nodeRightLeftLeft = new DialogNode("(11)", "Voltar ao vilarejo");
-    DialogNode* nodeRightLeftRight = new DialogNode("(12).");
+    DialogNode* nodeRightLeftRight = new DialogNode("(12)", "", "Pegar os espólios e encerrar a jornada");
     DialogNode* nodeRightRightLeft = new DialogNode("(13)");
     DialogNode* nodeRightRightRight = new DialogNode("(14)");
 
@@ -95,6 +104,11 @@ void DialogWindow::createWidgets()
 
     DialogNode* nodeRightLeftLeftLeft = new DialogNode("(17)");
 //    DialogNode* nodeLeftRightLeftRight = new DialogNode("(18)");
+
+
+//    DialogNode* nodeRightLeftRightLeft = new DialogNode("(18)");
+    DialogNode* nodeRightLeftRightRight = new DialogNode("(19)");
+
 
     currentNode->setLeftChild(nodeLeft);
     currentNode->setRightChild(nodeRight);
@@ -118,6 +132,10 @@ void DialogWindow::createWidgets()
     nodeRightRightLeft->setRightChild(nodeRightRightLeftRight);
 
     nodeRightLeftLeft->setLeftChild(nodeRightLeftLeftLeft);
+
+    //
+//    nodeRightLeftRight->setLeftChild(nodeRightLeftRightLeft);
+    nodeRightLeftRight->setRightChild(nodeRightLeftRightRight);
 
     // Atualiza os textos dos botões com base no nó atual
     leftButton->setText(currentNode->getLeftButtonText());
@@ -162,9 +180,10 @@ void DialogWindow::handleChoice()
                 label->setText("Você, " + player->getName() + ", chegou ao final dessa pequena grande história.\nMeus parabéns, outras grandes aventuras estão por vir!");
             }
         } else {
-            // Desabilita o botão direito se estiver no nó correspondente à tela (3)
+            // Desabilita o botão se estiver no nó correspondente à tela
             rightButton->setEnabled(currentNode->getText() != "(3)");
             leftButton->setEnabled(currentNode->getText() != "(13)");
+            rightButton->setEnabled(currentNode->getText() != "(11)");
         }
     }
 }
@@ -193,6 +212,21 @@ void DialogWindow::handleSpecialNode()
 
         DialogHelper::updateBackground(this, ":/images/assets/backgrounds/11.png");
         npcImgLabel->hide();
+        DialogHelper::hideChoiceButtons(this);
+
+    } else if (currentNode->getText() == "(4)") {
+
+        DialogHelper::updateBackground(this, ":/images/assets/backgrounds/13.png");
+        DialogHelper::updateLabel(this, "Ao investigar o local que um dia abrigou uma fonte mágica,\nme deparei com um espaço vago, um eco silencioso do poder que ali já floresceu.\nA razão para o desaparecimento revelou-se como a consequência de uma antiga batalha\nentre seres místicos, que resultou na extinção da fonte. \n\nDiante do espaço vago que antes abrigava a fonte mágica,\nduas escolhas se apresentavam...\n\nVocê decide:", Qt::AlignTop | Qt::AlignCenter, "color: black;");
+
+    } else if (currentNode->getText() == "(9)") {
+
+        DialogHelper::updateBackground(this, ":/images/assets/backgrounds/19.png");
+        DialogHelper::hideChoiceButtons(this);
+
+    } else if (currentNode->getText() == "(10)") {
+
+        DialogHelper::updateBackground(this, ":/images/assets/backgrounds/11.png");
         DialogHelper::hideChoiceButtons(this);
 
     }
@@ -241,28 +275,56 @@ void DialogWindow::handleSpecialNode()
 
         npcImgLabel->hide();
 
+    } else if (currentNode->getText() == "(12)") {
+
+        DialogHelper::updateBackground(this, ":/images/assets/backgrounds/24.png");
+        DialogHelper::updateImageLabel(this, ":/images/assets/item/chest/items.png");
+        DialogHelper::hideChoiceButtons(this);
+        getItemsButton->show();
+        DialogHelper::updateLabel(this, "Ao explorar os corredores do castelo desguarnecido, descobri uma câmara oculta\nrepleta de tesouros, saqueando riquezas acumuladas ao longo de batalhas épicas\ne desafios superados. Cada passo reverberava entre os pilares de pedra,\nenquanto os tesouros, banhados pela luz que se infiltrava sutilmente, revelavam-se\ncomo relíquias ansiosas para contar suas histórias.", Qt::AlignTop | Qt::AlignCenter, "color: white;");
+        label->show();
+
+    } else if (currentNode->getText() == "(19)") {
+
+        DialogHelper::hideChoiceButtons(this);
+
     }
 }
 
+// ---------------------------------------------------------------------
+
 void DialogWindow::handleAcceptGift()
 {
-    label->setText("Aceitando o presente, percebe-se que as criaturas não eram ameaçadoras,\nmas sim guardiãs da floresta.\nElas compartilham contigo um livro que contém informações grandiosas.\nAgradecendo, a criaturas que veio ao teu encontro desaparece nas sombras,\ndeixando para trás apenas o item dado a você.");
-    label->setAlignment(Qt::AlignTop | Qt::AlignCenter);
-    label->setStyleSheet("color: white;");
+    DialogHelper::updateLabel(this, "Aceitando o presente, percebe-se que as criaturas não eram ameaçadoras,\nmas sim guardiãs da floresta.\nElas compartilham contigo um livro que contém informações grandiosas.\nAgradecendo, a criaturas que veio ao teu encontro desaparece nas sombras,\ndeixando para trás apenas o item dado a você.", Qt::AlignTop | Qt::AlignCenter, "color: white;");
     label->show();
-
     acceptGiftButton->hide();
-    leftButton->show();
-    rightButton->show();
+    DialogHelper::showChoiceButtons(this);
+    DialogHelper::updateImageLabel(this, ":/images/assets/item/41.png");
+}
 
-    // Adiciona um item na telas
-    QPixmap itemImage(":/images/assets/item/41.png");
-    npcImgLabel->setPixmap(itemImage);
-    npcImgLabel->setAlignment(Qt::AlignCenter);
+void DialogWindow::handleGetItems()
+{
+    npcImgLabel->hide();
+    BattleWindow* battleWindow = new BattleWindow(this, "Mimico");
+    DialogHelper::hideChoiceButtons(this);
+    label->hide();
+    battleWindow->show();
+    DialogHelper::hideChoiceButtons(this);
+    getItemsButton->hide();
 
-    // Mostre a QLabel do inimigo
-    npcImgLabel->show();
+    GameData* gameData = GameData::getInstance();
+    Character* playerCharacter = gameData->getPlayer();
 
-    // Aumente a ordem de sobreposição para garantir que fique acima dos outros widgets
-    npcImgLabel->lower();
+    connect(battleWindow, &BattleWindow::battleFinished, this, [=]() {
+        if (playerCharacter->getHealth() <= 0) {
+            DialogHelper::updateLabel(this, "O herói, em sua jornada épica, confrontou o destino final.\nSua bravura, embora não coroada pela vitória, deixa uma marca para os\njovens aventureiros no tecido das narrativas.\n\nAssim, a epopeia conclui-se, resumindo-se em coragem diante da adversidade.", Qt::AlignTop | Qt::AlignCenter, "color: white;");
+            DialogHelper::hideChoiceButtons(this);
+            label->show();
+        } else if(playerCharacter->getHealth() > 0) {
+            DialogHelper::updateLabel(this, "Após derrotar o mimico, a ilusão de uma caixa de loot desvaneceu-se, revelando\nas garras vencidas do monstro dissimulado.\n\nA câmara agora exibia os destroços da batalha, e eu, vitorioso,\ncontemplava o triunfo sobre a astúcia disfarçada em promessas de tesouro.", Qt::AlignTop | Qt::AlignCenter, "color: white;");
+            label->show();
+            DialogHelper::showChoiceButtons(this);
+            leftButton->hide();
+        }
+    });
 }
