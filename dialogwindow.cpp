@@ -2,7 +2,7 @@
 #include "battlewindow.h"
 #include "gamedata.h"
 #include "battlewindow.h"
-#include "dialoghelper.h"  // Inclua o arquivo
+#include "dialoghelper.h"
 #include <QMovie>
 
 DialogWindow::DialogWindow(QWidget *parent)
@@ -82,32 +82,24 @@ void DialogWindow::createWidgets()
     // Criação da árvore de diálogo
     currentNode = new DialogNode("Em uma distante e enigmática terra, você inicia uma jornada repleta de escolhas.\nDiante de vários caminhos bifurcados sua aventura começa.\nCada decisão moldará seu destino, revelando segredos, enfrentando desafios\ne forjando uma história única.\nQual rumo você escolherá nesta trama repleta de mistérios e magia?\n\nPara começar, qual é sua primeira escolha dessa jornada?\n\nVocê decide:","Checar a clareira","Investigar os sons do cânion");
     DialogNode* nodeLeft = new DialogNode("(1)", "Interagir com as criaturas místicas", "Investigar a fonte mágica");
-    DialogNode* nodeRight = new DialogNode("(2)", "Seguir o murmúrio", "Ignorar e seguir a jornada");
-
-    // Adicionando mais três telas de escolhas
+    DialogNode* nodeRight = new DialogNode("(2)", "Seguir o murmúrio", "Ir ao acampamento dos aventureiros");
     DialogNode* nodeLeftLeft = new DialogNode("(3)","Seguir caminho");
     DialogNode* nodeLeftRight = new DialogNode("(4)","Andar em direção do campo aberto","Prosseguir rumo ao desconhecido");
     DialogNode* nodeRightLeft = new DialogNode("(5)","Dar as boas novas ao aventureiro", "Passar pelo portão");
-    DialogNode* nodeRightRight = new DialogNode("(6)");
+    DialogNode* nodeRightRight = new DialogNode("(6)", "Se preparar para lutar com eles");
     DialogNode* nodeLeftLeftLeft = new DialogNode("(7)");
-    //DialogNode* nodeLeftLeftRight = new DialogNode("(8)");
     DialogNode* nodeLeftRightLeft = new DialogNode("(9)");
     DialogNode* nodeLeftRightRight = new DialogNode("(10)");
     DialogNode* nodeRightLeftLeft = new DialogNode("(11)", "Voltar ao vilarejo");
     DialogNode* nodeRightLeftRight = new DialogNode("(12)", "", "Pegar os espólios e encerrar a jornada");
-    DialogNode* nodeRightRightLeft = new DialogNode("(13)");
+    DialogNode* nodeRightRightLeft = new DialogNode("(13)","" , "Comemorar com o grupo de aventureiros");
     DialogNode* nodeRightRightRight = new DialogNode("(14)");
-
-    // Adicione dois novos nós
-    // DialogNode* nodeRightRightLeftLeft = new DialogNode("(15)");
-    DialogNode* nodeRightRightLeftRight = new DialogNode("(16)");
-
+    DialogNode* nodeRightRightLeftRight = new DialogNode("(16)", "", "Encerrar o dia");
     DialogNode* nodeRightLeftLeftLeft = new DialogNode("(17)");
-//    DialogNode* nodeLeftRightLeftRight = new DialogNode("(18)");
-
-
-//    DialogNode* nodeRightLeftRightLeft = new DialogNode("(18)");
     DialogNode* nodeRightLeftRightRight = new DialogNode("(19)");
+
+
+    DialogNode* nodeRightLeftRightRightRight = new DialogNode("(20)");
 
 
     currentNode->setLeftChild(nodeLeft);
@@ -119,23 +111,16 @@ void DialogWindow::createWidgets()
     nodeRight->setLeftChild(nodeRightLeft);
     nodeRight->setRightChild(nodeRightRight);
     nodeLeftLeft->setLeftChild(nodeLeftLeftLeft);
-    //nodeLeftLeft->setRightChild(nodeLeftLeftRight);
     nodeLeftRight->setLeftChild(nodeLeftRightLeft);
     nodeLeftRight->setRightChild(nodeLeftRightRight);
     nodeRightLeft->setLeftChild(nodeRightLeftLeft);
     nodeRightLeft->setRightChild(nodeRightLeftRight);
     nodeRightRight->setLeftChild(nodeRightRightLeft);
     nodeRightRight->setRightChild(nodeRightRightRight);
-
-    // Configure as relações entre os novos nós e o nó existente (14)
-    // nodeRightRightLeft->setLeftChild(nodeRightRightLeftLeft);
     nodeRightRightLeft->setRightChild(nodeRightRightLeftRight);
-
     nodeRightLeftLeft->setLeftChild(nodeRightLeftLeftLeft);
-
-    //
-//    nodeRightLeftRight->setLeftChild(nodeRightLeftRightLeft);
     nodeRightLeftRight->setRightChild(nodeRightLeftRightRight);
+    nodeRightRightLeftRight->setRightChild(nodeRightLeftRightRightRight);
 
     // Atualiza os textos dos botões com base no nó atual
     leftButton->setText(currentNode->getLeftButtonText());
@@ -229,13 +214,7 @@ void DialogWindow::handleSpecialNode()
         DialogHelper::updateBackground(this, ":/images/assets/backgrounds/11.png");
         DialogHelper::hideChoiceButtons(this);
 
-    }
-
-
-
-
-
-    if (currentNode->getText() == "(2)") {
+    } else if (currentNode->getText() == "(2)") {
 
         DialogHelper::updateBackground(this, ":/images/assets/backgrounds/17.png");
         DialogHelper::updateMovieImage(this, ":/images/assets/char/mage/idle.gif");
@@ -288,10 +267,54 @@ void DialogWindow::handleSpecialNode()
 
         DialogHelper::hideChoiceButtons(this);
 
+    } else if (currentNode->getText() == "(6)") {
+
+        npcImgLabel->hide();
+        DialogHelper::updateBackground(this, ":/images/assets/backgrounds/5.png");
+        DialogHelper::updateImageLabel(this, ":/images/assets/group-char.png");
+        DialogHelper::updateLabel(this, "Enquanto seguia o caminho próximo ao castelo conquistado por monstros a uma década, você,\num intrépido aventureiro solitário, depara-se com um grupo de seis aventureiros experientes.\nEles estavam reunidos em uma clareira, discutindo os boatos sobre o tesouro lendário\nprotegido pelos monstros no castelo.\n\nIntrigados com a perspectiva de recompensas incríveis, você decide se juntar a eles,\ncompartilhando suas habilidades e conhecimentos para enfrentar o desafio iminente.", Qt::AlignTop | Qt::AlignCenter, "color: black;");
+        rightButton->hide();
+
+    } else if (currentNode->getText() == "(13)") {
+
+        DialogHelper::updateBackground(this, ":/images/assets/backgrounds/9.png");
+        npcImgLabel->hide();
+        BattleWindow* battleWindow = new BattleWindow(this, "GrupoDeInimigos");
+        DialogHelper::hideChoiceButtons(this);
+        label->hide();
+        battleWindow->show();
+        DialogHelper::hideChoiceButtons(this);
+
+        GameData* gameData = GameData::getInstance();
+        Character* playerCharacter = gameData->getPlayer();
+
+        connect(battleWindow, &BattleWindow::battleFinished, this, [=]() {
+            if (playerCharacter->getHealth() <= 0) {
+                DialogHelper::updateLabel(this, "O grupo de aventureiros percebeu tarde demais que a batalha que se segue é mais intensa\ndo que qualquer um de vocês poderia ter imaginado.\n\nOs monstros, em número e força superiores, impõem uma derrota amarga.\n\nFeridos e desanimados, vocês recuam para a segurança da floresta,\nonde decidem encerrar sua tentativa.", Qt::AlignTop | Qt::AlignCenter, "color: black;");
+                DialogHelper::hideChoiceButtons(this);
+                label->show();
+            } else if(playerCharacter->getHealth() > 0) {
+                DialogHelper::updateLabel(this, "A batalha é intensa, mas, desta vez, a cooperação e a estratégia prevalecem.\n\nOs monstros são derrotados, e o castelo se torna um tesouro aberto para vocês.\n\nA alegria e o alívio permeiam o grupo enquanto contam suas conquistas e dividem os espólios.", Qt::AlignTop | Qt::AlignCenter, "color: black;");
+                label->show();
+                DialogHelper::showChoiceButtons(this);
+                leftButton->hide();
+            }
+        });
+
+    } else if (currentNode->getText() == "(16)") {
+
+        DialogHelper::updateBackground(this, ":/images/assets/backgrounds/23.png");
+        DialogHelper::updateImageLabel(this, ":/images/assets/group.png");
+        DialogHelper::updateLabel(this, "Com os bolsos cheios de ouro e as mentes repletas de histórias épicas,\no grupo de aventureiros decide celebrar a vitória em seu acampamento.\n\nA notícia se espalha rapidamente pela região, e a comunidade local se une à festa.\nO dia se torna um momento de risos, música e celebração.\n\nÀ medida que a o dia termina, vocês compartilham experiências, criam laços mais fortes\ne percebem que a jornada, apesar das adversidades, valeu a pena.\n\nAssim decidem encerrar a celebração daquele dia, lembrando-se das memórias\ncompartilhadas e dos tesouros conquistados, ansiosos por novas aventuras que o\nfuturo possa trazer.", Qt::AlignTop | Qt::AlignCenter, "color: black;");
+        leftButton->hide();
+
+    } else if (currentNode->getText() == "(20)") {
+
+        DialogHelper::hideChoiceButtons(this);
+        npcImgLabel->hide();
+
     }
 }
-
-// ---------------------------------------------------------------------
 
 void DialogWindow::handleAcceptGift()
 {

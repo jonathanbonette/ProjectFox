@@ -42,5 +42,8 @@
         <file>assets/item/41.png</file>
         <file>assets/item/chest/items.png</file>
         <file>assets/monster/mimic/idle.gif</file>
+        <file>assets/group.png</file>
+        <file>assets/group-char.png</file>
+        <file>assets/group-enemy.gif</file>
     </qresource>
 </RCC>

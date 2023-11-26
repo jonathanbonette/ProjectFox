@@ -101,6 +101,8 @@ BattleWindow::BattleWindow(QWidget *parent, const QString &enemyType)
         enemy = new Character("Guerreiro Gigante", 150, 20, 35);
     } else if (enemyType == "Mimico") {
         enemy = new Character("Mimico", 50, 50, 10);
+    } else if (enemyType == "GrupoDeInimigos") {
+        enemy = new Character("Grupo de Inimigos", 500, 150, 200);
     }
 
     gameData->setEnemy(enemy);
@@ -137,6 +139,13 @@ void BattleWindow::startBattle()
     } else if (enemyType == "Mimico") {
 
         QMovie *enemyMovie = new QMovie(":/images/assets/monster/mimic/idle.gif");
+        enemyImgLabel->setMovie(enemyMovie);
+        enemyMovie->start();
+        enemyImgLabel->setAlignment(Qt::AlignCenter);
+
+    } else if (enemyType == "GrupoDeInimigos") {
+
+        QMovie *enemyMovie = new QMovie(":/images/assets/group-enemy.gif");
         enemyImgLabel->setMovie(enemyMovie);
         enemyMovie->start();
         enemyImgLabel->setAlignment(Qt::AlignCenter);

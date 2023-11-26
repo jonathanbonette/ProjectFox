@@ -1,5 +1,3 @@
-// dialoghelper.cpp
-
 #include "dialoghelper.h"
 #include "dialogwindow.h"
 #include <QLabel>
