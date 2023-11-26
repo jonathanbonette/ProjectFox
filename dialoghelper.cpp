@@ -38,11 +38,6 @@ void DialogHelper::updateLabel(DialogWindow *window, const QString &text, Qt::Al
     window->label->setStyleSheet(styleSheet);
 }
 
-void DialogHelper::showAcceptGiftButton(DialogWindow *window)
-{
-    // Lógica para mostrar o botão "Aceitar o presente"
-}
-
 void DialogHelper::hideChoiceButtons(DialogWindow *window)
 {
     window->leftButton->hide();

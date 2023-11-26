@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
 
     StartWindow startWindow;
 
-    // Quando o botão "Selecionar Personagem" é clicado, exibe a janela de seleção de personagens
+    // Quando o botão "Iniciar Jornada" é clicado, exibe a janela de seleção de personagens
     QObject::connect(&startWindow, &StartWindow::selectCharacterButtonClicked, [&]() {
         startWindow.hide();  // Esconde a tela inicial
 

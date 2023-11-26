@@ -21,10 +21,7 @@ void DialogWindow::createWidgets()
 
     // Exibe a janela de diálogo
     setFixedSize(640, 480);
-    QPixmap backgroundImage(":/images/assets/backgrounds/1.png");
-    QPalette palette;
-    palette.setBrush(backgroundRole(), backgroundImage);
-    setPalette(palette);
+    DialogHelper::updateBackground(this, ":/images/assets/backgrounds/1.png");
 
     // Configurações visuais para o rótulo
     label->setAlignment(Qt::AlignCenter);
@@ -97,8 +94,6 @@ void DialogWindow::createWidgets()
     DialogNode* nodeRightRightLeftRight = new DialogNode("(16)", "", "Encerrar o dia");
     DialogNode* nodeRightLeftLeftLeft = new DialogNode("(17)");
     DialogNode* nodeRightLeftRightRight = new DialogNode("(19)");
-
-
     DialogNode* nodeRightLeftRightRightRight = new DialogNode("(20)");
 
 
@@ -249,9 +244,11 @@ void DialogWindow::handleSpecialNode()
 
         DialogHelper::updateMovieImage(this, ":/images/assets/char/mage/idle.gif");
         DialogHelper::updateLabel(this, "Chamei o aventureiro ao local onde a batalha havia acontecido, eu o aguardava\ncom olhos ansiosos pela notícia do desfecho.\n\nO sorriso de triunfo estampava meu rosto, enquanto compartilhava\nas boas novas com o companheiro de jornada.\n\nSob o céu anoitecido, encontrei meu refúgio entre sombras das ruínas antigas,\nrendendo-me ao merecido descanso, enquanto os feitos heróicos ecoavam\nsuavemente nos recantos da minha mente, antevendo sonhos repletos de\nnovas jornadas a desvendar ao amanhecer.", Qt::AlignTop | Qt::AlignCenter, "color: white;");
+        rightButton->hide();
 
     } else if (currentNode->getText() == "(17)") {
 
+        DialogHelper::hideChoiceButtons(this);
         npcImgLabel->hide();
 
     } else if (currentNode->getText() == "(12)") {
@@ -323,6 +320,7 @@ void DialogWindow::handleAcceptGift()
     acceptGiftButton->hide();
     DialogHelper::showChoiceButtons(this);
     DialogHelper::updateImageLabel(this, ":/images/assets/item/41.png");
+    rightButton->hide();
 }
 
 void DialogWindow::handleGetItems()

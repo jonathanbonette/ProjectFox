@@ -1,5 +1,3 @@
-// dialoghelper.h
-
 #ifndef DIALOGHELPER_H
 #define DIALOGHELPER_H
 
@@ -8,6 +6,7 @@
 class DialogHelper
 {
 public:
+    // Métodos para genericalizar as chamadas das telas
     static void updateBackground(class DialogWindow *window, const QString &imagePath);
     static void updateLabel(class DialogWindow *window, const QString &text, Qt::Alignment alignment, const QString &styleSheet);
     static void showAcceptGiftButton(class DialogWindow *window);
@@ -15,8 +14,6 @@ public:
     static void showChoiceButtons(class DialogWindow *window);
     static void updateMovieImage(DialogWindow *window, const QString &moviePath);
     static void updateImageLabel(DialogWindow *window, const QString &imagePngPath);
-
-    // ... outras funções auxiliares conforme necessário
 };
 
 #endif // DIALOGHELPER_H

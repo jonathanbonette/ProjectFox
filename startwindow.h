@@ -3,7 +3,6 @@
 
 #include <QWidget>
 #include <QPushButton>
-//#include "battlewindow.h"
 #include "characterselectionwindow.h"
 #include "dialogwindow.h"
 

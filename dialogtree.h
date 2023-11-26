@@ -31,6 +31,7 @@ private:
     DialogNode* leftChild;      // Filho da esquerda
     DialogNode* rightChild;     // Filho da direita
 
+    // Texto dos botões personalizados
     QString leftButtonText;
     QString rightButtonText;
 };

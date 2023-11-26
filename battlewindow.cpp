@@ -9,7 +9,7 @@ BattleWindow::BattleWindow(QWidget *parent, const QString &enemyType)
     : QWidget(parent), player(nullptr), enemy(nullptr), enemyType(enemyType)
 {
     // Inicia a quantidade total das poções
-    playerPotions = 10;
+    playerPotions = 20;
 
     // Configuração da tela de batalha
     setFixedSize(640, 480);
@@ -102,12 +102,10 @@ BattleWindow::BattleWindow(QWidget *parent, const QString &enemyType)
     } else if (enemyType == "Mimico") {
         enemy = new Character("Mimico", 50, 50, 10);
     } else if (enemyType == "GrupoDeInimigos") {
-        enemy = new Character("Grupo de Inimigos", 500, 150, 200);
+        enemy = new Character("Grupo de Inimigos", 400, 50, 30);
     }
 
     gameData->setEnemy(enemy);
-
-    // qDebug() << gameData->getEnemy()->getName();
 
     // Inicializa a primeira etapa
     initStep();
@@ -151,13 +149,9 @@ void BattleWindow::startBattle()
         enemyImgLabel->setAlignment(Qt::AlignCenter);
     }
 
-    // Defina a geometria para ocupar a tela inteira
+    // Exibe a imagem abaixo doa botões
     enemyImgLabel->setGeometry(0, 0, width(), height());
-
-    // Mostre a QLabel do inimigo
     enemyImgLabel->show();
-
-    // Abaixa a ordem de sobreposição para que a imagem fiquei abaixo dos botões
     enemyImgLabel->lower();
 }
 
@@ -233,9 +227,6 @@ void BattleWindow::initStep()
     enemyImgLabel->hide();
     attackButton->hide();
     potionButton->hide();
-
-    // Inicializa a quantidade inicial de poções
-//    playerPotions = 10;
 }
 
 void BattleWindow::updateHealthLabels()
@@ -281,6 +272,6 @@ void BattleWindow::checkBattleResult()
 }
 
 void Character::setHealth(int newHealth) {
-    // Método da classe Character para configurar a saúde
+    // Método da classe Character para configurar a saúde após o uso da potion
     health = newHealth;
 }

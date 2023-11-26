@@ -94,15 +94,6 @@ void CharacterSelectionWindow::characterSelected(Character *character)
     DialogWindow* dialogWindow = new DialogWindow;
     gameData->setDialogWindow(dialogWindow);
 
-//    // Exibir informações sobre o personagem selecionado
-//    QMessageBox::information(this, "Personagem Selecionado", QString(
-//                                                                 "Você selecionou o personagem: %1 \nVida: %2 \nAtaque: %3 \nDefesa: %4")
-//                                                                     .arg(character->getName())
-//                                                                     .arg(character->getHealth())
-//                                                                     .arg(character->getAttack())
-//                                                                     .arg(character->getDefense())
-//                                                                 );
-
     // Mostrar o DialogWindow
     dialogWindow->show();
     this->close();          // Fecha a janela de seleção de personagem
