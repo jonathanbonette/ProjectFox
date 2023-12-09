@@ -58,3 +58,14 @@ void GameData::setEnemyAttackResult(const AttackResult& result)
 {
     enemyAttackResult = result;
 }
+
+// Potions
+int GameData::playerPotions = 15;
+
+int GameData::getPlayerPotions() {
+    return playerPotions;
+}
+
+void GameData::setPlayerPotions(int potions) {
+    playerPotions = potions;
+}

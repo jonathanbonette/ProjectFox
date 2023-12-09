@@ -21,7 +21,7 @@ BattleWindow::BattleWindow(QWidget *parent, const QString &enemyType)
     // Rótulo para exibir informações sobre a batalha
     infoLabel = new QLabel("Você iniciou uma batalha", this);
     infoLabel->setAlignment(Qt::AlignBottom | Qt::AlignCenter);
-    infoLabel->setFont(QFont("System", 24, QFont::Bold));
+    infoLabel->setFont(QFont("SansSerif", 10, QFont::Bold));
     infoLabel->setStyleSheet("color: white;");
 
     // Botão para iniciar a batalha
@@ -41,20 +41,20 @@ BattleWindow::BattleWindow(QWidget *parent, const QString &enemyType)
     enemyHealthLabel = new QLabel(this);
     playerHealthLabel->setAlignment(Qt::AlignTop);
     enemyHealthLabel->setAlignment(Qt::AlignTop);
-    playerHealthLabel->setFont(QFont("System", 24, QFont::Bold));
+    playerHealthLabel->setFont(QFont("SansSerif", 10, QFont::Bold));
     playerHealthLabel->setStyleSheet("color: white;");
-    enemyHealthLabel->setFont(QFont("System", 24, QFont::Bold));
+    enemyHealthLabel->setFont(QFont("SansSerif", 10, QFont::Bold));
     enemyHealthLabel->setStyleSheet("color: white;");
 
     // Criação de um QLabel para exibir mensagens dinâmicas
     hpMessage = new QLabel(this);
     hpMessage->setAlignment(Qt::AlignTop);
-    hpMessage->setFont(QFont("System", 24, QFont::Bold));
+    hpMessage->setFont(QFont("SansSerif", 10, QFont::Bold));
     hpMessage->setStyleSheet("color: white;");
 
     resultAttackLabel = new QLabel(this);
     resultAttackLabel->setAlignment(Qt::AlignTop);
-    resultAttackLabel->setFont(QFont("System", 24, QFont::Bold));
+    resultAttackLabel->setFont(QFont("SansSerif", 10, QFont::Bold));
     resultAttackLabel->setStyleSheet("color: white;");
 
     // Layout horizontal para os rótulos de saúde
@@ -118,6 +118,9 @@ void BattleWindow::startBattle()
     attackButton->show();
     potionButton->show();
     infoLabel->hide();
+
+    // Recupera o número de poções do GameData
+    playerPotions = GameData::getPlayerPotions();
 
     // Cria a imagemdo inimigo com base no tipo especificado
     if (enemyType == "InimigoPeludo") {
@@ -189,6 +192,9 @@ void BattleWindow::attack()
 
 void BattleWindow::usePotion()
 {
+    GameData* gameData = GameData::getInstance();
+    player = gameData->getPlayer();
+
     resultAttackLabel->hide();
 
     // Lógica para o uso de poção durante a batalha
@@ -204,6 +210,9 @@ void BattleWindow::usePotion()
         QString message = QString("Você recuperou 20 de HP. Poções sobrando: %1").arg(playerPotions);
         hpMessage->setText(message);
         hpMessage->show();
+
+        // Atualiza o número de poções no GameData
+        GameData::setPlayerPotions(playerPotions);
 
         // Verifica se o jogador ainda tem poções disponíveis
         if (playerPotions == 0) {

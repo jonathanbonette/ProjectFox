@@ -25,7 +25,7 @@ void DialogWindow::createWidgets()
 
     // Configurações visuais para o rótulo
     label->setAlignment(Qt::AlignCenter);
-    label->setFont(QFont("System", 36, QFont::Bold));
+    label->setFont(QFont("SansSerif", 10, QFont::Bold));
 
     leftButton = new QPushButton("Esquerda", this);
     rightButton = new QPushButton("Direita", this);
@@ -125,6 +125,7 @@ void DialogWindow::createWidgets()
     label->setText(currentNode->getText());
 }
 
+// Função para verificar e criar os nós
 void DialogWindow::handleChoice()
 {
     if (currentNode) {
@@ -168,12 +169,9 @@ void DialogWindow::handleChoice()
     }
 }
 
+// Tratamento para criação de todas as telas
 void DialogWindow::handleSpecialNode()
 {
-    // qDebug() << "handleSpecialNode called for node:" << currentNode->getText();
-
-    //------------------------------------------------------------------
-
     if (currentNode->getText() == "(1)") {
 
         DialogHelper::updateBackground(this, ":/images/assets/backgrounds/11.png");
@@ -313,6 +311,7 @@ void DialogWindow::handleSpecialNode()
     }
 }
 
+// Botão para aceitar o presente
 void DialogWindow::handleAcceptGift()
 {
     DialogHelper::updateLabel(this, "Aceitando o presente, percebe-se que as criaturas não eram ameaçadoras,\nmas sim guardiãs da floresta.\nElas compartilham contigo um livro que contém informações grandiosas.\nAgradecendo, a criaturas que veio ao teu encontro desaparece nas sombras,\ndeixando para trás apenas o item dado a você.", Qt::AlignTop | Qt::AlignCenter, "color: white;");
@@ -323,6 +322,7 @@ void DialogWindow::handleAcceptGift()
     rightButton->hide();
 }
 
+// Botão para pegar os espólios
 void DialogWindow::handleGetItems()
 {
     npcImgLabel->hide();

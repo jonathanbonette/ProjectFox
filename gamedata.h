@@ -35,6 +35,10 @@ public:
         return dialogWindow;
     }
 
+    // Potion
+    static int getPlayerPotions();
+    static void setPlayerPotions(int potions);
+
 private:
     // Construtor privado para evitar instâncias múltiplas
     GameData();
@@ -47,6 +51,9 @@ private:
 
     // Membro para armazenar a janela de diálogo
     DialogWindow* dialogWindow;
+
+    // Potion
+    static int playerPotions;
 };
 
 #endif // GAMEDATA_H
