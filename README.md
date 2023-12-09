@@ -16,7 +16,7 @@ Um jogo de história de aventura baseado em texto que você dirige seu personage
 
 Projeto Fox é uma simulação pré-programada de fantasia baseada em texto com algumas possibilidades. Ao contrário da maioria dos jogos onde você experimenta mundos criados por designers de jogos, a ideia do Projeto Fox é o desensolvimento de um projeto em C++ juntamente com o software QT Creator para a disciplina de Programação Orientada a Objetos do IFSC.
 
-Versão executável do jogo: [Uma pequena grande jornada](https://github.com/jonathanbonette/ProjectFox/blob/main/executable_game.rar).
+Versão executável do jogo: [A pequena grande jornada](https://github.com/jonathanbonette/ProjectFox/blob/main/executable_game.rar).
 
 <img src="start_window.png" align="center" width="480" alt="Logo IFSC">
 <img src="character_window.png" align="center" width="480" alt="Logo IFSC">
